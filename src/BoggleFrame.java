@@ -135,6 +135,9 @@ public class BoggleFrame extends JFrame
 
 		//progress bar to keep track of time 
 		progressStatusBar = new JProgressBar();
+		progressStatusBar.setStringPainted(true);
+		
+		progressStatusBar.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 		progressBar.add(progressStatusBar);
 		progressStatusBar.setValue(100);
 		ActionListener listener = new ActionListener() {
@@ -142,6 +145,7 @@ public class BoggleFrame extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				counter--;
+				progressStatusBar.setString(counter+" seconds");
 				progressStatusBar.setValue(counter);
 				if (counter<1) {
 					JOptionPane.showMessageDialog(null, "GameOver");
@@ -151,7 +155,7 @@ public class BoggleFrame extends JFrame
 		};
 		timer = new Timer(1000, listener);
 		timer.start();
-
+		
 
 		//Panel for actual game 
 		gameArea = new JPanel();
@@ -167,6 +171,8 @@ public class BoggleFrame extends JFrame
 		for(int i = 0; i < 16; i++)
 		{
 			squareButton[i] = new JLabel(new BoggleDice().rollCube().toUpperCase());  
+			squareButton[i].setBackground(Color.CYAN);
+			squareButton[i].setOpaque(true);
 			squareButton[i].setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 			squareButton[i].setHorizontalAlignment(SwingConstants.CENTER);
 			squareButton[i].setFont(new Font("American Typewriter", Font.BOLD, 30));

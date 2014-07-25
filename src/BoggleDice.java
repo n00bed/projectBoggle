@@ -18,10 +18,7 @@ public class BoggleDice {
 		numCubesCreated++;
 	}
 	
-	/**
-	 * 'Roll' the cube, which will generate a random letter for itself.
-	 * @return
-	 */
+	//Creating random letter by rolling cube
 	public String rollCube() {
 		int index = (int) (Math.random() * bigBoggleCubes[cubeID].length());
 		letter = bigBoggleCubes[cubeID].substring(index, index + 1);
