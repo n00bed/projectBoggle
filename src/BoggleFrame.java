@@ -26,22 +26,27 @@ import javax.swing.border.TitledBorder;
 @SuppressWarnings("serial")
 public class BoggleFrame extends JFrame
 {
-	private JPanel startScreenPanel; 
-	private JButton btnStartGame; 
-	private JTextArea txtrHighScore;
+	
 	private JPanel gamePanel;
 	private JPanel wordListArea;
 	private JPanel progressBar;
 	private JPanel gameArea;
 	private JPanel wordInputArea; 
-	private JLabel lblScore;
 	private JPanel wordListPanel;
-	private JScrollPane scroll; 
-	private JTextArea wordListTextArea;
+	private JPanel startScreenPanel; 
+	
+	private JLabel lblScore;
 	private JLabel lblEnterWord;
+	
+	private JTextArea wordListTextArea;
+	private JTextArea txtrHighScore;
+	
 	private JTextField textField;
+	private JButton btnStartGame; 
+	private JScrollPane scroll; 
 	private JProgressBar progressStatusBar;
 	private Timer timer; 
+	private int score; 
 
 
 
@@ -130,13 +135,13 @@ public class BoggleFrame extends JFrame
 		progressBar.setPreferredSize(new Dimension(10, 30));
 		gamePanel.add(progressBar, BorderLayout.NORTH);
 		
+		//Label that displays time left 
 		JLabel lblTimeLeft = new JLabel("TIME LEFT:");
 		progressBar.add(lblTimeLeft);
 
 		//progress bar to keep track of time 
 		progressStatusBar = new JProgressBar();
 		progressStatusBar.setStringPainted(true);
-		
 		progressStatusBar.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 		progressBar.add(progressStatusBar);
 		progressStatusBar.setValue(100);
@@ -165,13 +170,13 @@ public class BoggleFrame extends JFrame
 		gameArea.setBorder(BorderFactory.createEmptyBorder(30,30,30,30));
 		
 		
-	
+		//Array of 16 labels , board where the random letter are generated
 		JLabel[] squareButton = new JLabel[16];
 		
 		for(int i = 0; i < 16; i++)
 		{
 			squareButton[i] = new JLabel(new BoggleDice().rollCube().toUpperCase());  
-			squareButton[i].setBackground(Color.CYAN);
+			squareButton[i].setBackground(new Color(175,175,175));
 			squareButton[i].setOpaque(true);
 			squareButton[i].setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 			squareButton[i].setHorizontalAlignment(SwingConstants.CENTER);
@@ -198,6 +203,19 @@ public class BoggleFrame extends JFrame
 		textField.setBounds(169, 0, 300, 20);
 		wordInputArea.add(textField);
 		textField.setColumns(10);
+		
+		textField.addActionListener(new ActionListener() {
+
+			//TODO to add 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+//				String x = textField.getText();
+//				wordListTextArea.setText(x);
+//				textField.setText(null); 
+
+			}
+		});
 
 		//Done button to end the game
 		JButton btnDone = new JButton("Done");

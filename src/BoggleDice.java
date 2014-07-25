@@ -27,16 +27,12 @@ public class BoggleDice {
 		return letter;
 	}
 	
-	/**
-	 * @return the letter for this cube
-	 */
+	//returns letter for the cube 
 	public String getLetter() {
 		return letter;
 	}
 	
-	/**
-	 * @return the ID for this cube
-	 */
+	//will return the id of the cube 
 	public int getID() {
 		return cubeID;
 	}
