@@ -10,5 +10,6 @@ public class BoggleApp
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		 
+	
 	}
 }

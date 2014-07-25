@@ -27,13 +27,6 @@ import javax.swing.border.TitledBorder;
 public class BoggleFrame extends JFrame
 {
 	private JPanel startScreenPanel; 
-	private JPanel testPanel; 
-
-	private int mySeconds;
-	private int myGameLength;
-	private JProgressBar myProgress;
-	private javax.swing.Timer myTimer;
-
 	private JButton btnStartGame; 
 	private JTextArea txtrHighScore;
 	private JPanel gamePanel;
@@ -45,7 +38,6 @@ public class BoggleFrame extends JFrame
 	private JPanel wordListPanel;
 	private JScrollPane scroll; 
 	private JTextArea wordListTextArea;
-	private JLabel label;
 	private JLabel lblEnterWord;
 	private JTextField textField;
 	private JProgressBar progressStatusBar;
@@ -146,7 +138,7 @@ public class BoggleFrame extends JFrame
 		progressBar.add(progressStatusBar);
 		progressStatusBar.setValue(100);
 		ActionListener listener = new ActionListener() {
-			int counter = 10;
+			int counter = 100;
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				counter--;
@@ -174,9 +166,10 @@ public class BoggleFrame extends JFrame
 		
 		for(int i = 0; i < 16; i++)
 		{
-			//squareButton[i] = new JLabel("hello"); 
-			squareButton[i] = new JLabel(); 
+			squareButton[i] = new JLabel(new BoggleDice().rollCube().toUpperCase());  
 			squareButton[i].setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
+			squareButton[i].setHorizontalAlignment(SwingConstants.CENTER);
+			squareButton[i].setFont(new Font("American Typewriter", Font.BOLD, 30));
 			gameArea.add(squareButton[i]);
 		}
 		
