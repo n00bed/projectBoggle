@@ -21,7 +21,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
@@ -194,7 +196,7 @@ public class BoggleFrame extends JFrame
 		wordInputArea.setLayout(null);
 
 		// Enterword label
-		lblEnterWord = new JLabel("Enter Word:");
+		lblEnterWord = new JLabel("Your Word:");
 		lblEnterWord.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblEnterWord.setFont(new Font("American Typewriter", Font.BOLD, 16));
 		lblEnterWord.setBounds(6, 0, 140, 20);
@@ -232,16 +234,17 @@ public class BoggleFrame extends JFrame
 				goodWord += current_word + "\n";
 				current_word = "";
 				wordListTextArea.setText(goodWord);
+				
 				//Enables all the buttons that were disable when user input the last words
 				for(int i = 0; i<buttons.length; i++)
 				{
 					for (int j=0; j<buttons.length; j++)
 					{
-						buttons[i][j].setEnabled(true);						
+						buttons[i][j].setEnabled(true);	
+						buttons[i][j].setBorder(new LineBorder(Color.BLACK, 5));
 					}
 				}
-				
-				
+					
 
 			}
 		});
@@ -253,13 +256,15 @@ public class BoggleFrame extends JFrame
 	 */
 	private void buildGrid()
 	{
-		 
+		final Border thickBorder = new LineBorder(Color.RED, 5);
+		final Border thinBorder = new LineBorder(Color.BLACK, 5);
 		buttons = new JButton[4][4];
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 4; j++)
 			{
 				buttons[i][j] = new JButton(BoggleUtility.get_a_random_char());
+				buttons[i][j].setBorder(thinBorder);
 				final int buttonRow = i;
 				final int buttonColumn = j;
 				buttons[i][j].addActionListener(new ActionListener()
@@ -272,6 +277,9 @@ public class BoggleFrame extends JFrame
 								.getText();
 						textField.setText(current_word);
 						buttons[buttonRow][buttonColumn].setEnabled(false);
+						buttons[buttonRow][buttonColumn].setBorder(thickBorder);
+						buttons[buttonRow][buttonColumn].setOpaque(false);
+						
 				
 					}
 				});
