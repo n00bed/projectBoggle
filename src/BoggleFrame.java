@@ -20,9 +20,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+
+
 
 @SuppressWarnings("serial")
 public class BoggleFrame extends JFrame {
@@ -52,7 +55,7 @@ public class BoggleFrame extends JFrame {
 	private JScrollPane scroll;
 	private JProgressBar progressStatusBar;
 	private Timer timer;
-	private int counter;
+	private int counter =0;
 
 	private String current_word = "";
 	private String goodWord = "";
@@ -79,12 +82,15 @@ public class BoggleFrame extends JFrame {
 		btnStartGame.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				 
 				startScreenPanel.setVisible(false);
 				gamePanel.setVisible(true);
 				score = 0;
 				lblScore.setText("SCORE: " + score);
 				wordListTextArea.setText("");
 				goodWord=""; 
+				 Task task = new Task();                
+		         task.start();
 			}
 
 		});
@@ -171,27 +177,27 @@ public class BoggleFrame extends JFrame {
 				null));
 		progressBar.add(progressStatusBar);
 		progressStatusBar.setValue(100);
-		ActionListener listener = new ActionListener() {
-			int counter = 10;
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				counter--;
-				progressStatusBar.setString(counter + " seconds");
-				progressStatusBar.setValue(counter);
-				if (counter < 1) {
-					JOptionPane.showMessageDialog(null,
-							"GameOver.\n You scored: " + score);
-					startScreenPanel.setVisible(true);
-					gamePanel.setVisible(false);
-					timer.stop();
-				}
-			}
-
-		};
-		timer = new Timer(1000, listener);
-		timer.start();
+//		ActionListener listener = new ActionListener() {
+//			int counter = 10;
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//
+//				counter--;
+//				progressStatusBar.setString(counter + " seconds");
+//				progressStatusBar.setValue(counter);
+//				if (counter < 1) {
+//					JOptionPane.showMessageDialog(null,
+//							"GameOver.\n You scored: " + score);
+//					startScreenPanel.setVisible(true);
+//					gamePanel.setVisible(false);
+//					timer.stop();
+//				}
+//			}
+//
+//		};
+//		timer = new Timer(1000, listener);
+//		timer.start();
 
 		// Panel for actual game
 		gameArea = new JPanel();
@@ -401,4 +407,32 @@ public class BoggleFrame extends JFrame {
 		});
 		gameArea.add(gb3_3);
 	}
+	private class Task extends Thread {    
+	      public Task(){
+	      }
+
+	      public void run(){
+	         for(int i =10; i>= 0; i--){
+	            final int progress = i;
+	            final int counter = i; 
+	            SwingUtilities.invokeLater(new Runnable() {
+	               public void run() {
+	            	   
+	            	  progressStatusBar.setString(""+progress);
+	                  progressStatusBar.setValue(progress);
+	              	if (counter <= 0) {
+					JOptionPane.showMessageDialog(null,
+								"GameOver.\n You scored: " + score);
+						startScreenPanel.setVisible(true);
+						gamePanel.setVisible(false);
+	               }
+	                
+	               }
+	            });
+	            try {
+	               Thread.sleep(1000);
+	            } catch (InterruptedException e) {}
+	         }
+	      }
+	   } 
 }
