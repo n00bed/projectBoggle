@@ -52,7 +52,7 @@ public class BoggleFrame extends JFrame {
 	private JScrollPane scroll;
 	private JProgressBar progressStatusBar;
 	private Timer timer;
-	public static int counter;
+	private int counter;
 
 	private String current_word = "";
 	private String goodWord = "";
@@ -84,6 +84,7 @@ public class BoggleFrame extends JFrame {
 				score = 0;
 				lblScore.setText("SCORE: " + score);
 				wordListTextArea.setText("");
+				goodWord=""; 
 			}
 
 		});
@@ -174,7 +175,7 @@ public class BoggleFrame extends JFrame {
 			int counter = 10;
 
 			@Override
-			public void actionPerformed(ActionEvent ae) {
+			public void actionPerformed(ActionEvent e) {
 
 				counter--;
 				progressStatusBar.setString(counter + " seconds");
@@ -201,7 +202,6 @@ public class BoggleFrame extends JFrame {
 
 		// Array of 16 labels , board where the random letter are generated
 		words = BoggleUtility.get_words();
-		System.out.println("Number of words in words list: " + words.size());
 		build_grid();
 
 		// Panel to hold Enter Word label, textfield and done button
