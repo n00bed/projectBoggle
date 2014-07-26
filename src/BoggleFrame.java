@@ -51,6 +51,8 @@ public class BoggleFrame extends JFrame {
 	private JButton gb1_0, gb1_1, gb1_2, gb1_3;
 	private JButton gb2_0, gb2_1, gb2_2, gb2_3;
 	private JButton gb3_0, gb3_1, gb3_2, gb3_3;
+	
+	private JButton buttons[][] ;
 
 	private JScrollPane scroll;
 	private JProgressBar progressStatusBar;
@@ -74,6 +76,7 @@ public class BoggleFrame extends JFrame {
 		// Main screen that has start game button, high score and name of the
 		// game
 		startScreenPanel = new JPanel();
+		startScreenPanel.setForeground(Color.BLACK);
 		getContentPane().add(startScreenPanel, "name_1406241583084739000");
 		startScreenPanel.setLayout(null);
 
@@ -177,28 +180,8 @@ public class BoggleFrame extends JFrame {
 				null));
 		progressBar.add(progressStatusBar);
 		progressStatusBar.setValue(100);
-//		ActionListener listener = new ActionListener() {
-//			int counter = 10;
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//
-//				counter--;
-//				progressStatusBar.setString(counter + " seconds");
-//				progressStatusBar.setValue(counter);
-//				if (counter < 1) {
-//					JOptionPane.showMessageDialog(null,
-//							"GameOver.\n You scored: " + score);
-//					startScreenPanel.setVisible(true);
-//					gamePanel.setVisible(false);
-//					timer.stop();
-//				}
-//			}
-//
-//		};
-//		timer = new Timer(1000, listener);
-//		timer.start();
 
+		
 		// Panel for actual game
 		gameArea = new JPanel();
 		gameArea.setPreferredSize(new Dimension(200, 200));
@@ -208,7 +191,7 @@ public class BoggleFrame extends JFrame {
 
 		// Array of 16 labels , board where the random letter are generated
 		words = BoggleUtility.get_words();
-		build_grid();
+		buildGrid();
 
 		// Panel to hold Enter Word label, textfield and done button
 		wordInputArea = new JPanel();
@@ -225,6 +208,7 @@ public class BoggleFrame extends JFrame {
 
 		// Textfield for players to type word
 		textField = new JTextField();
+		textField.setEditable(false);
 		textField.setBounds(169, 0, 300, 20);
 		wordInputArea.add(textField);
 		textField.setColumns(10);
@@ -259,154 +243,31 @@ public class BoggleFrame extends JFrame {
 	/***
 	 * Making 16 board
 	 */
-
-	private void build_grid() {
-
-		gb0_0 = new JButton(BoggleUtility.get_a_random_char());
-		gb0_0.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_word += gb0_0.getText();
-				textField.setText(current_word);
+	
+	private void buildGrid() {
+		
+		buttons = new JButton[4][4];
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++) {
+				buttons[i][j] = new JButton(BoggleUtility.get_a_random_char());
+				final int buttonRow = i;
+				final int buttonColumn = j;
+				buttons[i][j].addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						current_word += buttons[buttonRow][buttonColumn].getText();
+						textField.setText(current_word);
+						
+					}
+				});
+				gameArea.add(buttons[i][j]);
 			}
-		});
-		gameArea.add(gb0_0);
-		gb0_1 = new JButton(BoggleUtility.get_a_random_char());
-		gb0_1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_word += gb0_1.getText();
-				textField.setText(current_word);
-			}
-		});
-		gameArea.add(gb0_1);
-		gb0_2 = new JButton(BoggleUtility.get_a_random_char());
-		gb0_2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_word += gb0_2.getText();
-				textField.setText(current_word);
-			}
-		});
-		gameArea.add(gb0_2);
-		gb0_3 = new JButton(BoggleUtility.get_a_random_char());
-		gb0_3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_word += gb0_3.getText();
-				textField.setText(current_word);
-			}
-		});
-		gameArea.add(gb0_3);
-		gb1_0 = new JButton(BoggleUtility.get_a_random_char());
-		gb1_0.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_word += gb1_0.getText();
-				textField.setText(current_word);
-			}
-		});
-		gameArea.add(gb1_0);
-		gb1_1 = new JButton(BoggleUtility.get_a_random_char());
-		gb1_1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_word += gb1_1.getText();
-				textField.setText(current_word);
-			}
-		});
-		gameArea.add(gb1_1);
-		gb1_2 = new JButton(BoggleUtility.get_a_random_char());
-		gb1_2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_word += gb1_2.getText();
-				textField.setText(current_word);
-			}
-		});
-		gameArea.add(gb1_2);
-		gb1_3 = new JButton(BoggleUtility.get_a_random_char());
-		gb1_3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_word += gb1_3.getText();
-				textField.setText(current_word);
-			}
-		});
-		gameArea.add(gb1_3);
-		gb2_0 = new JButton(BoggleUtility.get_a_random_char());
-		gb2_0.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_word += gb2_0.getText();
-				textField.setText(current_word);
-			}
-		});
-		gameArea.add(gb2_0);
-		gb2_1 = new JButton(BoggleUtility.get_a_random_char());
-		gb2_1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_word += gb2_1.getText();
-				textField.setText(current_word);
-			}
-		});
-		gameArea.add(gb2_1);
-		gb2_2 = new JButton(BoggleUtility.get_a_random_char());
-		gb2_2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_word += gb2_2.getText();
-				textField.setText(current_word);
-			}
-		});
-		gameArea.add(gb2_2);
-		gb2_3 = new JButton(BoggleUtility.get_a_random_char());
-		gb2_3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_word += gb2_3.getText();
-				textField.setText(current_word);
-			}
-		});
-		gameArea.add(gb2_3);
-		gb3_0 = new JButton(BoggleUtility.get_a_random_char());
-		gb3_0.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_word += gb3_0.getText();
-				textField.setText(current_word);
-			}
-		});
-		gameArea.add(gb3_0);
-		gb3_1 = new JButton(BoggleUtility.get_a_random_char());
-		gb3_1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_word += gb3_1.getText();
-				textField.setText(current_word);
-			}
-		});
-		gameArea.add(gb3_1);
-		gb3_2 = new JButton(BoggleUtility.get_a_random_char());
-		gb3_2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_word += gb3_2.getText();
-				textField.setText(current_word);
-			}
-		});
-		gameArea.add(gb3_2);
-		gb3_3 = new JButton(BoggleUtility.get_a_random_char());
-		gb3_3.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				current_word += gb3_3.getText();
-				textField.setText(current_word);
-			}
-		});
-		gameArea.add(gb3_3);
+		}
 	}
+
+
 	private class Task extends Thread {    
 	      public Task(){
 	      }
@@ -418,7 +279,7 @@ public class BoggleFrame extends JFrame {
 	            SwingUtilities.invokeLater(new Runnable() {
 	               public void run() {
 	            	   
-	            	  progressStatusBar.setString(""+progress);
+	            	  progressStatusBar.setString(""+progress+" seconds");
 	                  progressStatusBar.setValue(progress);
 	              	if (counter <= 0) {
 					JOptionPane.showMessageDialog(null,

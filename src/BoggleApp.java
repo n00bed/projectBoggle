@@ -13,6 +13,8 @@
  * 
  * Fixes required:
  * 7. progress bar status not starting with start button click
+ * 8. Figure out if the grid buttons can be created using 2D arrays. Last time we did that 
+ * the [i][j] location of button couldn't be accession actionevent handler. 
  */
 
 

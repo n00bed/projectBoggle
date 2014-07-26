@@ -3,6 +3,7 @@
  */
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
  
 public class test {
@@ -11,6 +12,7 @@ public class test {
    private JLabel headerLabel;
    private JLabel statusLabel;
    private JPanel controlPanel;
+   private JButton[][] buttons; 
 
    public test(){
       prepareGUI();
@@ -24,7 +26,7 @@ public class test {
    private void prepareGUI(){
       mainFrame = new JFrame("Java Swing Examples");
       mainFrame.setSize(400,400);
-      mainFrame.setLayout(new GridLayout(3, 1));
+      mainFrame.setLayout(new GridLayout(5, 1));
       mainFrame.addWindowListener(new WindowAdapter() {
          public void windowClosing(WindowEvent windowEvent){
             System.exit(0);
@@ -36,24 +38,31 @@ public class test {
       statusLabel.setSize(350,100);
 
       controlPanel = new JPanel();
-      controlPanel.setLayout(new FlowLayout());
+      controlPanel.setLayout(new GridLayout(5,1));
 
       mainFrame.add(headerLabel);
       mainFrame.add(controlPanel);
       mainFrame.add(statusLabel);
-      mainFrame.setVisible(true);  
+      mainFrame.setVisible(true); 
+      
+     
    }
 
    private JProgressBar progressBar;
    private Task task;
    private JButton startButton;
+   
+   
 
    
    private void showProgressBarDemo(){
       progressBar = new JProgressBar(0, 100);
       progressBar.setValue(0);
       progressBar.setStringPainted(true);
-      startButton = new JButton("Start");      
+      startButton = new JButton("Start");  
+      buildGrid(); 
+      
+      
          startButton.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
@@ -63,6 +72,9 @@ public class test {
       controlPanel.add(startButton);
       controlPanel.add(progressBar);
       mainFrame.setVisible(true);  
+      
+    
+     
    }
 
    private class Task extends Thread {    
@@ -83,5 +95,27 @@ public class test {
             } catch (InterruptedException e) {}
          }
       }
-   }   
+   }
+   
+  private void  buildGrid(){
+	      buttons = new JButton[4][4]; 
+	      for (int i = 0 ; i < 4 ; i++)
+			{
+				for (int j=0; j<4; j++)
+				{
+					buttons[i][j] = new JButton(""+i+j);
+					final int buttonRow = i ; 
+					final int buttonColumn = j; 
+					buttons[i][j].addActionListener(new ActionListener() {
+						@Override
+						
+						public void actionPerformed(ActionEvent e) {
+							System.out.println (buttons[buttonRow][buttonColumn].getText());
+							
+						}
+					});
+					controlPanel.add(buttons[i][j]);
+				}
+			}
+	      }
 }
