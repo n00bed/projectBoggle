@@ -24,7 +24,6 @@ import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-
 @SuppressWarnings("serial")
 public class BoggleFrame extends JFrame {
 
@@ -50,18 +49,16 @@ public class BoggleFrame extends JFrame {
 	private JButton gb2_0, gb2_1, gb2_2, gb2_3;
 	private JButton gb3_0, gb3_1, gb3_2, gb3_3;
 
-
 	private JScrollPane scroll;
 	private JProgressBar progressStatusBar;
 	private Timer timer;
-	JButton[][] squareButton;
+	public static int counter;
 
 	private String current_word = "";
-	private String goodWord = ""; 
+	private String goodWord = "";
 	private int score = 0;
-	JButton submit_button = new JButton("Submit");
+	JButton btnSubmit = new JButton("Submit");
 	Set<String> words = new HashSet<String>();
-
 
 	public BoggleFrame() {
 		// Card Layout to hold both main screen and game screen and set the size
@@ -84,8 +81,11 @@ public class BoggleFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				startScreenPanel.setVisible(false);
 				gamePanel.setVisible(true);
-
+				score = 0;
+				lblScore.setText("SCORE: " + score);
+				wordListTextArea.setText("");
 			}
+
 		});
 
 		btnStartGame.setFont(new Font("American Typewriter", Font.BOLD, 30));
@@ -128,7 +128,7 @@ public class BoggleFrame extends JFrame {
 		wordListArea.setLayout(null);
 
 		// Label for holding score during gameplay
-		lblScore = new JLabel("  SCORE: "+ score);
+		lblScore = new JLabel("  SCORE: " + score);
 		lblScore.setFont(new Font("American Typewriter", Font.BOLD, 16));
 		lblScore.setHorizontalAlignment(SwingConstants.LEFT);
 		lblScore.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
@@ -138,9 +138,9 @@ public class BoggleFrame extends JFrame {
 		// Actual opanel that holds the word list
 		wordListPanel = new JPanel();
 		wordListPanel
-		.setBorder(new TitledBorder(null, "WordList ",
-				TitledBorder.CENTER, TitledBorder.TOP, null, new Color(
-						0, 0, 0)));
+				.setBorder(new TitledBorder(null, "WordList ",
+						TitledBorder.CENTER, TitledBorder.TOP, null, new Color(
+								0, 0, 0)));
 		wordListPanel.setBounds(6, 80, 188, 337);
 		wordListArea.add(wordListPanel);
 		wordListPanel.setLayout(new GridLayout(1, 0, 0, 0));
@@ -164,24 +164,30 @@ public class BoggleFrame extends JFrame {
 
 		// progress bar to keep track of time
 		progressStatusBar = new JProgressBar();
+		progressStatusBar.setString("100 seconds");
 		progressStatusBar.setStringPainted(true);
 		progressStatusBar.setBorder(new EtchedBorder(EtchedBorder.RAISED, null,
 				null));
 		progressBar.add(progressStatusBar);
 		progressStatusBar.setValue(100);
 		ActionListener listener = new ActionListener() {
-			int counter = 100;
+			int counter = 10;
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
+
 				counter--;
 				progressStatusBar.setString(counter + " seconds");
 				progressStatusBar.setValue(counter);
 				if (counter < 1) {
-					JOptionPane.showMessageDialog(null, "GameOver");
+					JOptionPane.showMessageDialog(null,
+							"GameOver.\n You scored: " + score);
+					startScreenPanel.setVisible(true);
+					gamePanel.setVisible(false);
 					timer.stop();
 				}
 			}
+
 		};
 		timer = new Timer(1000, listener);
 		timer.start();
@@ -194,14 +200,9 @@ public class BoggleFrame extends JFrame {
 		gameArea.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
 		// Array of 16 labels , board where the random letter are generated
-		squareButton = new JButton[4][4];
-
 		words = BoggleUtility.get_words();
-
-
-		System.out.println("Number of words in words list: "+words.size());
+		System.out.println("Number of words in words list: " + words.size());
 		build_grid();
-
 
 		// Panel to hold Enter Word label, textfield and done button
 		wordInputArea = new JPanel();
@@ -222,53 +223,44 @@ public class BoggleFrame extends JFrame {
 		wordInputArea.add(textField);
 		textField.setColumns(10);
 
-		textField.addActionListener(new ActionListener() {
-
-			// TODO to add
+		// Submit button to submit and add the word to side textarea
+		btnSubmit.setBounds(477, 0, 117, 20);
+		btnSubmit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				// String x = textField.getText();
-				// wordListTextArea.setText(x);
-				// textField.setText(null);
+				// System.out.println("CURRENT WORD: "+current_word);
+				// System.out.println("true/false: "+words.contains(current_word));
 
-			}
-		});
+				if (words.contains(current_word)) {
+					score += current_word.length();
+					lblScore.setText("SCORE: " + score);
 
-		// Submit button to submit the word
-
-		submit_button.setBounds(477, 0, 117, 20);
-		submit_button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				System.out.println("CURRENT WORD: "+current_word);
-				System.out.println("true/false: "+words.contains(current_word));
-
-				if(words.contains(current_word))
-				{
-					score+=current_word.length();
-					lblScore.setText("SCORE: "+score);
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"Invalid word. No score will be awarded");
 				}
 
-				goodWord += current_word+"\n"; 
-				current_word= ""; 
+				goodWord += current_word + "\n";
+				current_word = "";
 				wordListTextArea.setText(goodWord);
 
 			}
 		});
-		wordInputArea.add(submit_button);
+		wordInputArea.add(btnSubmit);
 	}
 
 	/***
-	 * 
+	 * Making 16 board
 	 */
+
 	private void build_grid() {
+
 		gb0_0 = new JButton(BoggleUtility.get_a_random_char());
 		gb0_0.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				current_word+=gb0_0.getText();
+				current_word += gb0_0.getText();
 				textField.setText(current_word);
 			}
 		});
@@ -277,7 +269,7 @@ public class BoggleFrame extends JFrame {
 		gb0_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				current_word+=gb0_1.getText();
+				current_word += gb0_1.getText();
 				textField.setText(current_word);
 			}
 		});
@@ -286,7 +278,7 @@ public class BoggleFrame extends JFrame {
 		gb0_2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				current_word+=gb0_2.getText();
+				current_word += gb0_2.getText();
 				textField.setText(current_word);
 			}
 		});
@@ -295,7 +287,7 @@ public class BoggleFrame extends JFrame {
 		gb0_3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				current_word+=gb0_3.getText();
+				current_word += gb0_3.getText();
 				textField.setText(current_word);
 			}
 		});
@@ -304,7 +296,7 @@ public class BoggleFrame extends JFrame {
 		gb1_0.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				current_word+=gb1_0.getText();
+				current_word += gb1_0.getText();
 				textField.setText(current_word);
 			}
 		});
@@ -313,7 +305,7 @@ public class BoggleFrame extends JFrame {
 		gb1_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				current_word+=gb1_1.getText();
+				current_word += gb1_1.getText();
 				textField.setText(current_word);
 			}
 		});
@@ -322,7 +314,7 @@ public class BoggleFrame extends JFrame {
 		gb1_2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				current_word+=gb1_2.getText();
+				current_word += gb1_2.getText();
 				textField.setText(current_word);
 			}
 		});
@@ -331,7 +323,7 @@ public class BoggleFrame extends JFrame {
 		gb1_3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				current_word+=gb1_3.getText();
+				current_word += gb1_3.getText();
 				textField.setText(current_word);
 			}
 		});
@@ -340,7 +332,7 @@ public class BoggleFrame extends JFrame {
 		gb2_0.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				current_word+=gb2_0.getText();
+				current_word += gb2_0.getText();
 				textField.setText(current_word);
 			}
 		});
@@ -349,7 +341,7 @@ public class BoggleFrame extends JFrame {
 		gb2_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				current_word+=gb2_1.getText();
+				current_word += gb2_1.getText();
 				textField.setText(current_word);
 			}
 		});
@@ -358,7 +350,7 @@ public class BoggleFrame extends JFrame {
 		gb2_2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				current_word+=gb2_2.getText();
+				current_word += gb2_2.getText();
 				textField.setText(current_word);
 			}
 		});
@@ -367,7 +359,7 @@ public class BoggleFrame extends JFrame {
 		gb2_3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				current_word+=gb2_3.getText();
+				current_word += gb2_3.getText();
 				textField.setText(current_word);
 			}
 		});
@@ -376,7 +368,7 @@ public class BoggleFrame extends JFrame {
 		gb3_0.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				current_word+=gb3_0.getText();
+				current_word += gb3_0.getText();
 				textField.setText(current_word);
 			}
 		});
@@ -385,7 +377,7 @@ public class BoggleFrame extends JFrame {
 		gb3_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				current_word+=gb3_1.getText();
+				current_word += gb3_1.getText();
 				textField.setText(current_word);
 			}
 		});
@@ -394,7 +386,7 @@ public class BoggleFrame extends JFrame {
 		gb3_2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				current_word+=gb3_2.getText();
+				current_word += gb3_2.getText();
 				textField.setText(current_word);
 			}
 		});
@@ -403,7 +395,7 @@ public class BoggleFrame extends JFrame {
 		gb3_3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				current_word+=gb3_3.getText();
+				current_word += gb3_3.getText();
 				textField.setText(current_word);
 			}
 		});

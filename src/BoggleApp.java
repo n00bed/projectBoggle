@@ -1,11 +1,16 @@
 /*
  * TODO List 
- * 1. Solve for all possible word
- * 2. Store all possible word to a  list 
- * 3. Get user input, if it is in a list , add it to the set
- * 4. Display the word on the screen and update score
- * 5. When time is up or user hits done, show final score , write it to external .txt file
+ * 1. Solve for all possible word(Not doing that anymore, just checking the user input against lexicon) 
+ * 2. Store all possible word to a  list ( not necessary since we are not creating all possible values)
+ * 3. Get user input, if it is in a list , add it to the set( succesfully adding to the world list screen) 
+ * 4. Display the word on the screen and update score ( done) 
+ * 5. When time is up or user hits done, show final score , write it to external .txt file. Still need to do that
+ * 	  need to create a gameOver method, which resets the whole thing and starts from beginning. 
+ *
  * 6. Display the high score on the main screen from the .txt 
+ * 
+ * Fixes required:
+ * 7. progress bar status not starting with start button click
  */
 
 
