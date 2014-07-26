@@ -21,14 +21,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-
-
 @SuppressWarnings("serial")
-public class BoggleFrame extends JFrame {
+public class BoggleFrame extends JFrame
+{
 
 	private JPanel gamePanel;
 	private JPanel wordListArea;
@@ -47,17 +45,10 @@ public class BoggleFrame extends JFrame {
 	private JTextField textField;
 	private JButton btnStartGame;
 
-	private JButton gb0_0, gb0_1, gb0_2, gb0_3;
-	private JButton gb1_0, gb1_1, gb1_2, gb1_3;
-	private JButton gb2_0, gb2_1, gb2_2, gb2_3;
-	private JButton gb3_0, gb3_1, gb3_2, gb3_3;
-	
-	private JButton buttons[][] ;
+	private JButton buttons[][];
 
 	private JScrollPane scroll;
 	private JProgressBar progressStatusBar;
-	private Timer timer;
-	private int counter =0;
 
 	private String current_word = "";
 	private String goodWord = "";
@@ -65,7 +56,9 @@ public class BoggleFrame extends JFrame {
 	JButton btnSubmit = new JButton("Submit");
 	Set<String> words = new HashSet<String>();
 
-	public BoggleFrame() {
+
+	public BoggleFrame()
+	{
 		// Card Layout to hold both main screen and game screen and set the size
 		// of the screen
 		getContentPane().setLayout(new CardLayout(0, 0));
@@ -82,18 +75,20 @@ public class BoggleFrame extends JFrame {
 
 		// Start button to start the game;
 		btnStartGame = new JButton("START GAME");
-		btnStartGame.addActionListener(new ActionListener() {
+		btnStartGame.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				 
+			public void actionPerformed(ActionEvent e)
+			{
+
 				startScreenPanel.setVisible(false);
 				gamePanel.setVisible(true);
 				score = 0;
 				lblScore.setText("SCORE: " + score);
 				wordListTextArea.setText("");
-				goodWord=""; 
-				 Task task = new Task();                
-		         task.start();
+				goodWord = "";
+				Task task = new Task();
+				task.start();
 			}
 
 		});
@@ -181,7 +176,6 @@ public class BoggleFrame extends JFrame {
 		progressBar.add(progressStatusBar);
 		progressStatusBar.setValue(100);
 
-		
 		// Panel for actual game
 		gameArea = new JPanel();
 		gameArea.setPreferredSize(new Dimension(200, 200));
@@ -215,18 +209,22 @@ public class BoggleFrame extends JFrame {
 
 		// Submit button to submit and add the word to side textarea
 		btnSubmit.setBounds(477, 0, 117, 20);
-		btnSubmit.addActionListener(new ActionListener() {
+		btnSubmit.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e)
+			{
 
 				// System.out.println("CURRENT WORD: "+current_word);
 				// System.out.println("true/false: "+words.contains(current_word));
 
-				if (words.contains(current_word)) {
+				if (words.contains(current_word))
+				{
 					score += current_word.length();
 					lblScore.setText("SCORE: " + score);
 
-				} else {
+				} else
+				{
 					JOptionPane.showMessageDialog(null,
 							"Invalid word. No score will be awarded");
 				}
@@ -234,6 +232,16 @@ public class BoggleFrame extends JFrame {
 				goodWord += current_word + "\n";
 				current_word = "";
 				wordListTextArea.setText(goodWord);
+				//Enables all the buttons that were disable when user input the last words
+				for(int i = 0; i<buttons.length; i++)
+				{
+					for (int j=0; j<buttons.length; j++)
+					{
+						buttons[i][j].setEnabled(true);						
+					}
+				}
+				
+				
 
 			}
 		});
@@ -243,23 +251,28 @@ public class BoggleFrame extends JFrame {
 	/***
 	 * Making 16 board
 	 */
-	
-	private void buildGrid() {
-		
+	private void buildGrid()
+	{
+		 
 		buttons = new JButton[4][4];
 		for (int i = 0; i < 4; i++)
 		{
-			for (int j = 0; j < 4; j++) {
+			for (int j = 0; j < 4; j++)
+			{
 				buttons[i][j] = new JButton(BoggleUtility.get_a_random_char());
 				final int buttonRow = i;
 				final int buttonColumn = j;
-				buttons[i][j].addActionListener(new ActionListener() {
+				buttons[i][j].addActionListener(new ActionListener()
+				{
 					@Override
-					public void actionPerformed(ActionEvent e) {
-						
-						current_word += buttons[buttonRow][buttonColumn].getText();
+					public void actionPerformed(ActionEvent e)
+					{
+
+						current_word += buttons[buttonRow][buttonColumn]
+								.getText();
 						textField.setText(current_word);
-						
+						buttons[buttonRow][buttonColumn].setEnabled(false);
+				
 					}
 				});
 				gameArea.add(buttons[i][j]);
@@ -267,33 +280,42 @@ public class BoggleFrame extends JFrame {
 		}
 	}
 
+	private class Task extends Thread
+	{
+		public Task()
+		{
+		}
 
-	private class Task extends Thread {    
-	      public Task(){
-	      }
+		public void run()
+		{
+			for (int i = 20; i >= 0; i--)
+			{
+				final int progress = i;
+				final int counter = i;
+				SwingUtilities.invokeLater(new Runnable()
+				{
+					public void run()
+					{
 
-	      public void run(){
-	         for(int i =10; i>= 0; i--){
-	            final int progress = i;
-	            final int counter = i; 
-	            SwingUtilities.invokeLater(new Runnable() {
-	               public void run() {
-	            	   
-	            	  progressStatusBar.setString(""+progress+" seconds");
-	                  progressStatusBar.setValue(progress);
-	              	if (counter <= 0) {
-					JOptionPane.showMessageDialog(null,
-								"GameOver.\n You scored: " + score);
-						startScreenPanel.setVisible(true);
-						gamePanel.setVisible(false);
-	               }
-	                
-	               }
-	            });
-	            try {
-	               Thread.sleep(1000);
-	            } catch (InterruptedException e) {}
-	         }
-	      }
-	   } 
+						progressStatusBar.setString("" + progress + " seconds");
+						progressStatusBar.setValue(progress);
+						if (counter <= 0)
+						{
+							JOptionPane.showMessageDialog(null,
+									"GameOver.\n You scored: " + score);
+							startScreenPanel.setVisible(true);
+							gamePanel.setVisible(false);
+						}
+
+					}
+				});
+				try
+				{
+					Thread.sleep(1000);
+				} catch (InterruptedException e)
+				{
+				}
+			}
+		}
+	}
 }
