@@ -120,7 +120,7 @@ public class test
 		{
 			for (int j = 0; j < 4; j++)
 			{
-				buttons[i][j] = new JButton("" + i + j);
+				buttons[i][j] = new JButton(new BoggleDice().rollCube());
 				final int br = i;
 				final int bc = j;
 				buttons[i][j].setEnabled(true);

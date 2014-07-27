@@ -272,7 +272,7 @@ public class BoggleFrame extends JFrame
 		{
 			for (int j = 0; j < 4; j++)
 			{
-				buttons[i][j] = new JButton(BoggleUtility.get_a_random_char());
+				buttons[i][j] = new JButton(new BoggleDice().rollCube().toUpperCase());
 				buttons[i][j].setBorder(thinBorder);
 				buttons[i][j].setFont(new Font("American Typewriter",
 						Font.BOLD, 30));

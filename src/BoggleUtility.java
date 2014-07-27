@@ -33,19 +33,5 @@ public class BoggleUtility
 
 	}
 
-	public static String get_a_random_char()
-	{
 
-		String return_value = "";
-		char temp = (char) (65 + (int) (Math.random() * 26));
-
-		if (temp == 'Q')
-		{
-			return_value = "Qu";
-		} else
-		{
-			return_value += temp;
-		}
-		return return_value;
-	}
 }
