@@ -1,28 +1,33 @@
+//This is just a test class to test ideas. It is not being used for actual game.
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 public class testEvenHandler implements ActionListener
 {
 	private JButton buttons[][];
+	// test Test;  
+	
+	
+	public testEvenHandler(JButton[][] buttons)
+	{
+		//this.Test = new test(); 
+		this.buttons = buttons; 
+
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		// TODO Auto-generated method stub
-		buttons = new JButton[4][4];
 		
-		
-		
-		for (int i = 0; i < 4; i++)
-		{
-			for (int j = 0; j < 4; j++)
-			{
-				
+
 				if (e.getSource() == buttons[0][0])
 				{
-					System.out.println(i+j);
+					//System.out.println(i+j);
 					buttons[0][0].setEnabled(false);
 					buttons[0][1].setEnabled(true);
 					buttons[0][2].setEnabled(false);
@@ -332,6 +337,7 @@ public class testEvenHandler implements ActionListener
 				}
 
 			}
-		}
-	}
 }
+
+	
+
