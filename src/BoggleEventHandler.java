@@ -7,6 +7,7 @@ public class BoggleEventHandler implements ActionListener
 {
 	private JButton buttons[][];
 	
+	
 
 	public BoggleEventHandler(JButton[][] buttons)
 	{
@@ -23,7 +24,7 @@ public class BoggleEventHandler implements ActionListener
 			buttons[0][1].setEnabled(true);
 			buttons[1][0].setEnabled(true);
 			buttons[1][1].setEnabled(true);
-
+			
 			// false
 			buttons[0][0].setEnabled(false);
 			buttons[0][2].setEnabled(false);
@@ -86,7 +87,7 @@ public class BoggleEventHandler implements ActionListener
 
 		else if (e.getSource() == buttons[0][3])
 		{
-			// true
+		//	 true
 			buttons[0][2].setEnabled(true);
 			buttons[1][2].setEnabled(true);
 			buttons[1][3].setEnabled(true);
@@ -346,6 +347,8 @@ public class BoggleEventHandler implements ActionListener
 			buttons[2][0].setEnabled(false);
 			buttons[3][0].setEnabled(false);
 			buttons[3][2].setEnabled(false);
+			
+			
 		} else if (e.getSource() == buttons[3][3])
 		{
 

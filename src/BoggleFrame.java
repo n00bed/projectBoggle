@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+ 
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,11 +55,11 @@ public class BoggleFrame extends JFrame
 	private JProgressBar progressStatusBar;
 
 	private String currentWord = "";
-	private String goodWord = "";
+//	private String goodWord = "";
 	private int score = 0;
 	JButton btnSubmit = new JButton("Submit");
 	Set<String> words = new HashSet<String>();
-
+	Set<String> wordsDisplay = new HashSet<String>();
 
 	public BoggleFrame()
 	{
@@ -88,7 +90,7 @@ public class BoggleFrame extends JFrame
 				score = 0;
 				lblScore.setText("SCORE: " + score);
 				wordListTextArea.setText("");
-				goodWord = "";
+		//		goodWord = "";
 				Task task = new Task();
 				task.start();
 			}
@@ -101,7 +103,8 @@ public class BoggleFrame extends JFrame
 
 		// Text area that displays the games name "THE ULTIMATE BOGGLE"
 		JTextArea gameNameLabel = new JTextArea();
-		gameNameLabel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		gameNameLabel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null,
+				null));
 		gameNameLabel.setEditable(false);
 		gameNameLabel.setLineWrap(true);
 		gameNameLabel.setFont(new Font("American Typewriter", Font.BOLD, 40));
@@ -184,7 +187,8 @@ public class BoggleFrame extends JFrame
 		gameArea.setLayout(new GridLayout(4, 4, 5, 5));
 		gameArea.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
-		// Array of 16 labels , board where the random letter are generated
+		// build Grid builds Array of 16 labels , board where the random letter
+		// are generated , words holds all the words from lexicon
 		words = BoggleUtility.get_words();
 		buildGrid();
 
@@ -201,7 +205,7 @@ public class BoggleFrame extends JFrame
 		lblEnterWord.setBounds(6, 0, 140, 20);
 		wordInputArea.add(lblEnterWord);
 
-		// Textfield for players to type word
+		// Textfield for players to diplay clicked word
 		textField = new JTextField();
 		textField.setEditable(false);
 		textField.setBounds(169, 0, 300, 20);
@@ -218,8 +222,16 @@ public class BoggleFrame extends JFrame
 
 				if (words.contains(currentWord))
 				{
-					score += currentWord.length();
-					lblScore.setText("SCORE: " + score);
+					if (!(wordsDisplay.contains(currentWord)))
+					{
+						score += currentWord.length();
+						;
+						lblScore.setText("SCORE: " + score);
+					} else
+					{
+						JOptionPane.showMessageDialog(null, "Already used");
+					}
+					wordsDisplay.add(currentWord);
 
 				} else
 				{
@@ -227,20 +239,21 @@ public class BoggleFrame extends JFrame
 							"Invalid word. No score will be awarded");
 				}
 
-				goodWord += currentWord + "\n";
+		//		goodWord += currentWord + "\n";
 				currentWord = "";
-				wordListTextArea.setText(goodWord);
-				
-				//Enables all the buttons that were disable when user input the last words
-				for(int i = 0; i<buttons.length; i++)
+
+				wordListTextArea.setText(getwordsDisplay() + "\n");
+
+				// Enables all the buttons that were disable when user input the
+				// last words
+				for (int i = 0; i < buttons.length; i++)
 				{
-					for (int j=0; j<buttons.length; j++)
+					for (int j = 0; j < buttons.length; j++)
 					{
-						buttons[i][j].setEnabled(true);	
+						buttons[i][j].setEnabled(true);
 						buttons[i][j].setBorder(new LineBorder(Color.BLACK, 5));
 					}
 				}
-					
 
 			}
 		});
@@ -261,10 +274,11 @@ public class BoggleFrame extends JFrame
 			{
 				buttons[i][j] = new JButton(BoggleUtility.get_a_random_char());
 				buttons[i][j].setBorder(thinBorder);
-				buttons[i][j].setFont(new Font("American Typewriter", Font.BOLD, 30));
+				buttons[i][j].setFont(new Font("American Typewriter",
+						Font.BOLD, 30));
 				final int buttonRow = i;
 				final int buttonColumn = j;
-				ActionListener listener = new BoggleEventHandler(buttons); 
+				ActionListener listener = new BoggleEventHandler(buttons);
 				buttons[i][j].addActionListener(listener);
 				buttons[i][j].addActionListener(new ActionListener()
 				{
@@ -278,9 +292,7 @@ public class BoggleFrame extends JFrame
 						buttons[buttonRow][buttonColumn].setEnabled(false);
 						buttons[buttonRow][buttonColumn].setBorder(thickBorder);
 						buttons[buttonRow][buttonColumn].setOpaque(false);
-						
-						
-			
+
 					}
 				});
 				gameArea.add(buttons[i][j]);
@@ -325,5 +337,17 @@ public class BoggleFrame extends JFrame
 				}
 			}
 		}
+	}
+
+	// Returns word set wordsDisplay
+	private String getwordsDisplay()
+	{
+		String return_value = "";
+		for (String s : wordsDisplay)
+		{
+			return_value += s.toString() + "\n";
+		}
+
+		return return_value;
 	}
 }
