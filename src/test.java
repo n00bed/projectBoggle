@@ -114,35 +114,31 @@ public class test
 		buttons = new JButton[4][4];
 		
 		final JButton submit = new JButton("Submit"); 
-		controlPanel.add(submit);
+		//controlPanel.add(submit);
 		
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 4; j++)
 			{
 				buttons[i][j] = new JButton("" + i + j);
-				final int buttonRow = i;
-				final int buttonColumn = j;
+				final int br = i;
+				final int bc = j;
 				buttons[i][j].setEnabled(true);
+				final ActionListener listener = new testEvenHandler(); 
+				buttons[i][j].addActionListener(listener);
+				
 				buttons[i][j].addActionListener(new ActionListener()
 				{		
 					@Override
 					public void actionPerformed(ActionEvent e)
 					{
 						
-						System.out.println(buttons[buttonRow][buttonColumn]
+						System.out.println(buttons[br][bc]
 								.getText());
-						buttons[buttonRow][buttonColumn].setEnabled(false);
-						submit.addActionListener(new ActionListener(){
-
-							@Override
-							public void actionPerformed(ActionEvent e)
-							{
-								buttons[buttonRow][buttonColumn].setEnabled(true);
-								
-							}
-							
-						});
+						buttons[br][bc].addActionListener(listener);
+						
+						//buttons[buttonRow][buttonColumn].setEnabled(false);
+						
 											
 					}
 					

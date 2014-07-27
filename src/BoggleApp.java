@@ -15,7 +15,8 @@
  * 7. progress bar status not starting with start button click (FIXED) 
  * 8. Figure out if the grid buttons can be created using 2D arrays. Last time we did that 
  * the [i][j] location of button couldn't be accession actionevent handler. (DONE) 
- * 9. See if you can enable only adjacent button when users are inputting words
+ * 9. See if you can enable only adjacent button when users are inputting words. It is possible to do this now but, 
+ * the code currently used is super long. 
  */
 
 

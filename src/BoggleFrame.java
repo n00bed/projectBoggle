@@ -101,9 +101,8 @@ public class BoggleFrame extends JFrame
 
 		// Text area that displays the games name "THE ULTIMATE BOGGLE"
 		JTextArea gameNameLabel = new JTextArea();
+		gameNameLabel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		gameNameLabel.setEditable(false);
-		gameNameLabel.setBorder(new EtchedBorder(EtchedBorder.RAISED, null,
-				null));
 		gameNameLabel.setLineWrap(true);
 		gameNameLabel.setFont(new Font("American Typewriter", Font.BOLD, 40));
 		gameNameLabel.setBackground(new Color(238, 238, 238));
@@ -280,6 +279,320 @@ public class BoggleFrame extends JFrame
 						buttons[buttonRow][buttonColumn].setBorder(thickBorder);
 						buttons[buttonRow][buttonColumn].setOpaque(false);
 						
+						if(e.getSource()==buttons[0][0])
+						{
+							buttons[0][0].setEnabled(false);
+							buttons[0][1].setEnabled(true); 
+							buttons[0][2].setEnabled(false);
+							buttons[0][3].setEnabled(false);
+							buttons[1][0].setEnabled(true); 
+							buttons[1][1].setEnabled(true); 
+							buttons[1][2].setEnabled(false);
+							buttons[1][3].setEnabled(false);
+							buttons[2][0].setEnabled(false);
+							buttons[2][1].setEnabled(false);
+							buttons[2][2].setEnabled(false);
+							buttons[2][3].setEnabled(false);
+							buttons[3][0].setEnabled(false);
+							buttons[3][1].setEnabled(false);
+							buttons[3][2].setEnabled(false);
+							buttons[3][3].setEnabled(false);	
+						}
+						else if(e.getSource()==buttons[0][1])
+						{
+							buttons[0][0].setEnabled(true);
+							buttons[0][1].setEnabled(false); 
+							buttons[0][2].setEnabled(true);
+							buttons[0][3].setEnabled(false);
+							buttons[1][0].setEnabled(true); 
+							buttons[1][1].setEnabled(true); 
+							buttons[1][2].setEnabled(true);
+							buttons[1][3].setEnabled(false);
+							buttons[2][0].setEnabled(false);
+							buttons[2][1].setEnabled(false);
+							buttons[2][2].setEnabled(false);
+							buttons[2][3].setEnabled(false);
+							buttons[3][0].setEnabled(false);
+							buttons[3][1].setEnabled(false);
+							buttons[3][2].setEnabled(false);
+							buttons[3][3].setEnabled(false);	
+						}
+						
+						else if(e.getSource()==buttons[0][2])
+						{
+							buttons[0][0].setEnabled(false);
+							buttons[0][1].setEnabled(true); 
+							buttons[0][2].setEnabled(false);
+							buttons[0][3].setEnabled(true);
+							buttons[1][0].setEnabled(false); 
+							buttons[1][1].setEnabled(true); 
+							buttons[1][2].setEnabled(true);
+							buttons[1][3].setEnabled(true);
+							buttons[2][0].setEnabled(false);
+							buttons[2][1].setEnabled(false);
+							buttons[2][2].setEnabled(false);
+							buttons[2][3].setEnabled(false);
+							buttons[3][0].setEnabled(false);
+							buttons[3][1].setEnabled(false);
+							buttons[3][2].setEnabled(false);
+							buttons[3][3].setEnabled(false);	
+						}
+						
+						else if(e.getSource()==buttons[0][3])
+						{
+							buttons[0][0].setEnabled(false);
+							buttons[0][1].setEnabled(false); 
+							buttons[0][2].setEnabled(true);
+							buttons[0][3].setEnabled(false);
+							buttons[1][0].setEnabled(false); 
+							buttons[1][1].setEnabled(false); 
+							buttons[1][2].setEnabled(true);
+							buttons[1][3].setEnabled(true);
+							buttons[2][0].setEnabled(false);
+							buttons[2][1].setEnabled(false);
+							buttons[2][2].setEnabled(false);
+							buttons[2][3].setEnabled(false);
+							buttons[3][0].setEnabled(false);
+							buttons[3][1].setEnabled(false);
+							buttons[3][2].setEnabled(false);
+							buttons[3][3].setEnabled(false);	
+						}
+						
+						else if(e.getSource()==buttons[1][0])
+						{
+							buttons[0][0].setEnabled(true);
+							buttons[0][1].setEnabled(true); 
+							buttons[0][2].setEnabled(false);
+							buttons[0][3].setEnabled(false);
+							buttons[1][0].setEnabled(false); 
+							buttons[1][1].setEnabled(true); 
+							buttons[1][2].setEnabled(false);
+							buttons[1][3].setEnabled(false);
+							buttons[2][0].setEnabled(true);
+							buttons[2][1].setEnabled(true);
+							buttons[2][2].setEnabled(false);
+							buttons[2][3].setEnabled(false);
+							buttons[3][0].setEnabled(false);
+							buttons[3][1].setEnabled(false);
+							buttons[3][2].setEnabled(false);
+							buttons[3][3].setEnabled(false);	
+						}
+						
+						else if(e.getSource()==buttons[1][1])
+						{
+							buttons[0][0].setEnabled(true);
+							buttons[0][1].setEnabled(true); 
+							buttons[0][2].setEnabled(true);
+							buttons[0][3].setEnabled(false);
+							buttons[1][0].setEnabled(true); 
+							buttons[1][1].setEnabled(false); 
+							buttons[1][2].setEnabled(true);
+							buttons[1][3].setEnabled(false);
+							buttons[2][0].setEnabled(true);
+							buttons[2][1].setEnabled(true);
+							buttons[2][2].setEnabled(true);
+							buttons[2][3].setEnabled(false);
+							buttons[3][0].setEnabled(false);
+							buttons[3][1].setEnabled(false);
+							buttons[3][2].setEnabled(false);
+							buttons[3][3].setEnabled(false);	
+						}
+						
+						else if(e.getSource()==buttons[1][2])
+						{
+							buttons[0][0].setEnabled(false);
+							buttons[0][1].setEnabled(true); 
+							buttons[0][2].setEnabled(true);
+							buttons[0][3].setEnabled(true);
+							buttons[1][0].setEnabled(false); 
+							buttons[1][1].setEnabled(true); 
+							buttons[1][2].setEnabled(true);
+							buttons[1][3].setEnabled(true);
+							buttons[2][0].setEnabled(false);
+							buttons[2][1].setEnabled(true);
+							buttons[2][2].setEnabled(true);
+							buttons[2][3].setEnabled(true);
+							buttons[3][0].setEnabled(false);
+							buttons[3][1].setEnabled(false);
+							buttons[3][2].setEnabled(false);
+							buttons[3][3].setEnabled(false);	
+						}
+						
+						else if(e.getSource()==buttons[1][3])
+						{
+							buttons[0][0].setEnabled(false);
+							buttons[0][1].setEnabled(false); 
+							buttons[0][2].setEnabled(true);
+							buttons[0][3].setEnabled(true);
+							buttons[1][0].setEnabled(false); 
+							buttons[1][1].setEnabled(false); 
+							buttons[1][2].setEnabled(true);
+							buttons[1][3].setEnabled(false);
+							buttons[2][0].setEnabled(false);
+							buttons[2][1].setEnabled(false);
+							buttons[2][2].setEnabled(true);
+							buttons[2][3].setEnabled(true);
+							buttons[3][0].setEnabled(false);
+							buttons[3][1].setEnabled(false);
+							buttons[3][2].setEnabled(false);
+							buttons[3][3].setEnabled(false);	
+						}
+						else if(e.getSource()==buttons[2][0])
+						{
+							buttons[0][0].setEnabled(false);
+							buttons[0][1].setEnabled(false); 
+							buttons[0][2].setEnabled(false);
+							buttons[0][3].setEnabled(false);
+							buttons[1][0].setEnabled(true); 
+							buttons[1][1].setEnabled(true); 
+							buttons[1][2].setEnabled(false);
+							buttons[1][3].setEnabled(false);
+							buttons[2][0].setEnabled(false);
+							buttons[2][1].setEnabled(true);
+							buttons[2][2].setEnabled(false);
+							buttons[2][3].setEnabled(false);
+							buttons[3][0].setEnabled(true);
+							buttons[3][1].setEnabled(true);
+							buttons[3][2].setEnabled(false);
+							buttons[3][3].setEnabled(false);	
+						}
+						
+						else if(e.getSource()==buttons[2][1])
+						{
+							buttons[0][0].setEnabled(false);
+							buttons[0][1].setEnabled(false); 
+							buttons[0][2].setEnabled(false);
+							buttons[0][3].setEnabled(false);
+							buttons[1][0].setEnabled(true); 
+							buttons[1][1].setEnabled(true); 
+							buttons[1][2].setEnabled(true);
+							buttons[1][3].setEnabled(false);
+							buttons[2][0].setEnabled(true);
+							buttons[2][1].setEnabled(false);
+							buttons[2][2].setEnabled(true);
+							buttons[2][3].setEnabled(false);
+							buttons[3][0].setEnabled(true);
+							buttons[3][1].setEnabled(true);
+							buttons[3][2].setEnabled(true);
+							buttons[3][3].setEnabled(false);	
+						}
+						else if(e.getSource()==buttons[2][2])
+						{
+							buttons[0][0].setEnabled(false);
+							buttons[0][1].setEnabled(false); 
+							buttons[0][2].setEnabled(false);
+							buttons[0][3].setEnabled(false);
+							buttons[1][0].setEnabled(false); 
+							buttons[1][1].setEnabled(true); 
+							buttons[1][2].setEnabled(true);
+							buttons[1][3].setEnabled(true);
+							buttons[2][0].setEnabled(false);
+							buttons[2][1].setEnabled(true);
+							buttons[2][2].setEnabled(false);
+							buttons[2][3].setEnabled(true);
+							buttons[3][0].setEnabled(false);
+							buttons[3][1].setEnabled(true);
+							buttons[3][2].setEnabled(true);
+							buttons[3][3].setEnabled(true);	
+						}
+						else if(e.getSource()==buttons[2][3])
+						{
+							buttons[0][0].setEnabled(false);
+							buttons[0][1].setEnabled(false); 
+							buttons[0][2].setEnabled(false);
+							buttons[0][3].setEnabled(false);
+							buttons[1][0].setEnabled(false); 
+							buttons[1][1].setEnabled(false); 
+							buttons[1][2].setEnabled(true);
+							buttons[1][3].setEnabled(true);
+							buttons[2][0].setEnabled(false);
+							buttons[2][1].setEnabled(false);
+							buttons[2][2].setEnabled(true);
+							buttons[2][3].setEnabled(false);
+							buttons[3][0].setEnabled(false);
+							buttons[3][1].setEnabled(false);
+							buttons[3][2].setEnabled(true);
+							buttons[3][3].setEnabled(true);	
+						}
+						
+						else if(e.getSource()==buttons[3][0])
+						{
+							buttons[0][0].setEnabled(false);
+							buttons[0][1].setEnabled(false); 
+							buttons[0][2].setEnabled(false);
+							buttons[0][3].setEnabled(false);
+							buttons[1][0].setEnabled(false); 
+							buttons[1][1].setEnabled(false); 
+							buttons[1][2].setEnabled(false);
+							buttons[1][3].setEnabled(false);
+							buttons[2][0].setEnabled(true);
+							buttons[2][1].setEnabled(true);
+							buttons[2][2].setEnabled(false);
+							buttons[2][3].setEnabled(false);
+							buttons[3][0].setEnabled(false);
+							buttons[3][1].setEnabled(true);
+							buttons[3][2].setEnabled(false);
+							buttons[3][3].setEnabled(false);	
+						}
+						
+						else if(e.getSource()==buttons[3][1])
+						{
+							buttons[0][0].setEnabled(false);
+							buttons[0][1].setEnabled(false); 
+							buttons[0][2].setEnabled(false);
+							buttons[0][3].setEnabled(false);
+							buttons[1][0].setEnabled(false); 
+							buttons[1][1].setEnabled(false); 
+							buttons[1][2].setEnabled(false);
+							buttons[1][3].setEnabled(false);
+							buttons[2][0].setEnabled(true);
+							buttons[2][1].setEnabled(true);
+							buttons[2][2].setEnabled(true);
+							buttons[2][3].setEnabled(false);
+							buttons[3][0].setEnabled(true);
+							buttons[3][1].setEnabled(false);
+							buttons[3][2].setEnabled(true);
+							buttons[3][3].setEnabled(false);	
+						}
+						
+						else if(e.getSource()==buttons[3][2])
+						{
+							buttons[0][0].setEnabled(false);
+							buttons[0][1].setEnabled(false); 
+							buttons[0][2].setEnabled(false);
+							buttons[0][3].setEnabled(false);
+							buttons[1][0].setEnabled(false); 
+							buttons[1][1].setEnabled(false); 
+							buttons[1][2].setEnabled(false);
+							buttons[1][3].setEnabled(false);
+							buttons[2][0].setEnabled(false);
+							buttons[2][1].setEnabled(true);
+							buttons[2][2].setEnabled(true);
+							buttons[2][3].setEnabled(true);
+							buttons[3][0].setEnabled(false);
+							buttons[3][1].setEnabled(true);
+							buttons[3][2].setEnabled(false);
+							buttons[3][3].setEnabled(true);	
+						}
+						else if(e.getSource()==buttons[3][3])
+						{
+							buttons[0][0].setEnabled(false);
+							buttons[0][1].setEnabled(false); 
+							buttons[0][2].setEnabled(false);
+							buttons[0][3].setEnabled(false);
+							buttons[1][0].setEnabled(false); 
+							buttons[1][1].setEnabled(false); 
+							buttons[1][2].setEnabled(false);
+							buttons[1][3].setEnabled(false);
+							buttons[2][0].setEnabled(false);
+							buttons[2][1].setEnabled(false);
+							buttons[2][2].setEnabled(true);
+							buttons[2][3].setEnabled(true);
+							buttons[3][0].setEnabled(false);
+							buttons[3][1].setEnabled(false);
+							buttons[3][2].setEnabled(true);
+							buttons[3][3].setEnabled(false);	
+						}
 				
 					}
 				});
@@ -296,7 +609,7 @@ public class BoggleFrame extends JFrame
 
 		public void run()
 		{
-			for (int i = 20; i >= 0; i--)
+			for (int i = 100; i >= 0; i--)
 			{
 				final int progress = i;
 				final int counter = i;
