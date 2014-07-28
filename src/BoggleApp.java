@@ -31,6 +31,7 @@ public class BoggleApp
 	public static void main( String[] args)
 	{
 		BoggleFrame frame = new BoggleFrame(); 
+		frame.setTitle("BOGGLE");
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);

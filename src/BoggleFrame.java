@@ -28,6 +28,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+
 @SuppressWarnings("serial")
 public class BoggleFrame extends JFrame
 {
@@ -55,16 +56,19 @@ public class BoggleFrame extends JFrame
 	private JProgressBar progressStatusBar;
 
 	private String currentWord = "";
-//	private String goodWord = "";
 	private int score = 0;
+	
+	private final Border clickBorder= new LineBorder(Color.RED, 5);
+	private final Border unclickborder= new LineBorder(Color.BLACK, 5);
+	
 	JButton btnSubmit = new JButton("Submit");
 	Set<String> words = new HashSet<String>();
 	Set<String> wordsDisplay = new HashSet<String>();
+	
 
 	public BoggleFrame()
 	{
-		// Card Layout to hold both main screen and game screen and set the size
-		// of the screen
+		// Card Layout to hold both main screen and game screen and set the size of the screen
 		getContentPane().setLayout(new CardLayout(0, 0));
 		this.setSize(600, 500);
 		this.setResizable(false);
@@ -74,6 +78,7 @@ public class BoggleFrame extends JFrame
 		// game
 		startScreenPanel = new JPanel();
 		startScreenPanel.setForeground(Color.BLACK);
+		startScreenPanel.setBackground(new Color(100,150,200));
 		getContentPane().add(startScreenPanel, "name_1406241583084739000");
 		startScreenPanel.setLayout(null);
 
@@ -90,16 +95,17 @@ public class BoggleFrame extends JFrame
 				score = 0;
 				lblScore.setText("SCORE: " + score);
 				wordListTextArea.setText("");
-		//		goodWord = "";
 				Task task = new Task();
 				task.start();
+				
 			}
 
 		});
 
 		btnStartGame.setFont(new Font("American Typewriter", Font.BOLD, 30));
-		btnStartGame.setBounds(52, 204, 246, 221);
+		btnStartGame.setBounds(14, 204, 357, 221);
 		startScreenPanel.add(btnStartGame);
+
 
 		// Text area that displays the games name "THE ULTIMATE BOGGLE"
 		JTextArea gameNameLabel = new JTextArea();
@@ -108,7 +114,7 @@ public class BoggleFrame extends JFrame
 		gameNameLabel.setEditable(false);
 		gameNameLabel.setLineWrap(true);
 		gameNameLabel.setFont(new Font("American Typewriter", Font.BOLD, 40));
-		gameNameLabel.setBackground(new Color(238, 238, 238));
+		gameNameLabel.setBackground(new Color(100, 150, 200));
 		gameNameLabel.setText("THE ULTIMATE\n       BOGGLE");
 		gameNameLabel.setBounds(14, 27, 357, 155);
 		startScreenPanel.add(gameNameLabel);
@@ -121,8 +127,10 @@ public class BoggleFrame extends JFrame
 		txtrHighScore.setEditable(false);
 		txtrHighScore.setFont(new Font("American Typewriter", Font.BOLD, 20));
 		txtrHighScore.setText("      HIGH SCORE");
-		txtrHighScore.setBounds(383, 27, 184, 392);
+		txtrHighScore.setBounds(383, 73, 184, 352);
 		startScreenPanel.add(txtrHighScore);
+		
+	
 
 		// Actual game screen
 		gamePanel = new JPanel();
@@ -205,10 +213,9 @@ public class BoggleFrame extends JFrame
 		lblEnterWord.setBounds(6, 0, 140, 20);
 		wordInputArea.add(lblEnterWord);
 
-		// Textfield for players to diplay clicked word
+		// Textfield for players to display clicked word
 		textField = new JTextField();
-		textField.setEditable(false);
-		textField.setBounds(169, 0, 300, 20);
+		textField.setBounds(171, 1, 300, 20);
 		wordInputArea.add(textField);
 		textField.setColumns(10);
 
@@ -239,9 +246,7 @@ public class BoggleFrame extends JFrame
 							"Invalid word. No score will be awarded");
 				}
 
-		//		goodWord += currentWord + "\n";
 				currentWord = "";
-
 				wordListTextArea.setText(getwordsDisplay() + "\n");
 
 				// Enables all the buttons that were disable when user input the
@@ -260,20 +265,17 @@ public class BoggleFrame extends JFrame
 		wordInputArea.add(btnSubmit);
 	}
 
-	/***
-	 * Making 16 board
-	 */
+	//Creating 16 boards
 	private void buildGrid()
 	{
-		final Border thickBorder = new LineBorder(Color.RED, 5);
-		final Border thinBorder = new LineBorder(Color.BLACK, 5);
+
 		buttons = new JButton[4][4];
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 4; j++)
 			{
 				buttons[i][j] = new JButton(new BoggleDice().rollCube().toUpperCase());
-				buttons[i][j].setBorder(thinBorder);
+				buttons[i][j].setBorder(unclickborder);
 				buttons[i][j].setFont(new Font("American Typewriter",
 						Font.BOLD, 30));
 				final int buttonRow = i;
@@ -290,7 +292,7 @@ public class BoggleFrame extends JFrame
 								.getText();
 						textField.setText(currentWord);
 						buttons[buttonRow][buttonColumn].setEnabled(false);
-						buttons[buttonRow][buttonColumn].setBorder(thickBorder);
+						buttons[buttonRow][buttonColumn].setBorder(clickBorder);
 						buttons[buttonRow][buttonColumn].setOpaque(false);
 
 					}
@@ -320,11 +322,8 @@ public class BoggleFrame extends JFrame
 						progressStatusBar.setString("" + progress + " seconds");
 						progressStatusBar.setValue(progress);
 						if (counter <= 0)
-						{
-							JOptionPane.showMessageDialog(null,
-									"GameOver.\n You scored: " + score);
-							startScreenPanel.setVisible(true);
-							gamePanel.setVisible(false);
+						{	
+							gameOver(); 														
 						}
 
 					}
@@ -339,7 +338,7 @@ public class BoggleFrame extends JFrame
 		}
 	}
 
-	// Returns word set wordsDisplay
+	// Returns word from set wordsDisplay
 	private String getwordsDisplay()
 	{
 		String return_value = "";
@@ -350,4 +349,26 @@ public class BoggleFrame extends JFrame
 
 		return return_value;
 	}
+	
+
+	private void gameOver()
+	{
+		 	JOptionPane.showMessageDialog(null, "GameOver.\n You scored: " + score+" ");
+			startScreenPanel.setVisible(true);
+			gamePanel.setVisible(false);
+			wordsDisplay.clear();
+			currentWord=""; 
+			textField.setText(currentWord);
+		for (int i = 0 ; i <4; i++)
+		{
+			for (int j = 0; j<4; j++)
+			{
+			buttons[i][j].setEnabled(true);
+			buttons[i][j].setBorder(unclickborder);	
+			buttons[i][j].setText(new BoggleDice().rollCube().toUpperCase());
+			}
+		}
+	}
+	
+	
 }
