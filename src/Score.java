@@ -35,4 +35,9 @@ implements Serializable, Comparable<Score>
 		return ((Integer)(score1.getScore())).compareTo(getScore());
 	}
 	
+	@Override
+	public String toString()
+	{
+		return theNames+"\t "+score; 
+	}
 }

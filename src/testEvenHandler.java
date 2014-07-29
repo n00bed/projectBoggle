@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 public class testEvenHandler implements ActionListener
 {
 	private JButton buttons[][];
+	private int getI=0; 
+	private int getJ=0; 
 	// test Test;  
 	
 	
@@ -24,7 +26,6 @@ public class testEvenHandler implements ActionListener
 	{
 		// TODO Auto-generated method stub
 		
-
 				if (e.getSource() == buttons[0][0])
 				{
 					//System.out.println(i+j);
@@ -152,7 +153,7 @@ public class testEvenHandler implements ActionListener
 					buttons[0][3].setEnabled(true);
 					buttons[1][0].setEnabled(false);
 					buttons[1][1].setEnabled(true);
-					buttons[1][2].setEnabled(true);
+					buttons[1][2].setEnabled(false);
 					buttons[1][3].setEnabled(true);
 					buttons[2][0].setEnabled(false);
 					buttons[2][1].setEnabled(true);
@@ -337,6 +338,17 @@ public class testEvenHandler implements ActionListener
 				}
 
 			}
+	
+	public int getI()
+	{
+		return getI ; 
+		
+	}
+	public int getJ()
+	{
+		return getJ ; 
+		
+	}
 }
 
 	

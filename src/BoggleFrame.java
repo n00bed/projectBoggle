@@ -6,8 +6,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
- 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -50,20 +50,26 @@ public class BoggleFrame extends JFrame
 	private JTextField textField;
 	private JButton btnStartGame;
 
-	private JButton buttons[][];
+	private BoggleButton buttons[][];
 
 	private JScrollPane scroll;
 	private JProgressBar progressStatusBar;
 
 	private String currentWord = "";
-	private int score = 0;
+	private int score;
 	
 	private final Border clickBorder= new LineBorder(Color.RED, 5);
 	private final Border unclickborder= new LineBorder(Color.BLACK, 5);
 	
-	JButton btnSubmit = new JButton("Submit");
-	Set<String> words = new HashSet<String>();
-	Set<String> wordsDisplay = new HashSet<String>();
+	private JButton btnSubmit; 
+	private String theNames; 
+	
+	
+	private Set<String> words = new HashSet<String>();
+	private Set<String> wordsDisplay = new HashSet<String>();
+	private ArrayList<Score > scoretrack; 
+	private JLabel lblHighScores;
+ 
 	
 
 	public BoggleFrame()
@@ -126,9 +132,15 @@ public class BoggleFrame extends JFrame
 		txtrHighScore.setLineWrap(true);
 		txtrHighScore.setEditable(false);
 		txtrHighScore.setFont(new Font("American Typewriter", Font.BOLD, 20));
-		txtrHighScore.setText("      HIGH SCORE");
 		txtrHighScore.setBounds(383, 73, 184, 352);
 		startScreenPanel.add(txtrHighScore);
+		
+		//label that holds high score
+		lblHighScores = new JLabel("HIGH SCORES");
+		lblHighScores.setFont(new Font("American Typewriter", Font.BOLD, 20));
+		lblHighScores.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHighScores.setBounds(383, 41, 184, 16);
+		startScreenPanel.add(lblHighScores);
 		
 	
 
@@ -215,11 +227,13 @@ public class BoggleFrame extends JFrame
 
 		// Textfield for players to display clicked word
 		textField = new JTextField();
+		textField.setEditable(false);
 		textField.setBounds(171, 1, 300, 20);
 		wordInputArea.add(textField);
 		textField.setColumns(10);
 
 		// Submit button to submit and add the word to side textarea
+		btnSubmit = new JButton("Submit");
 		btnSubmit.setBounds(477, 0, 117, 20);
 		btnSubmit.addActionListener(new ActionListener()
 		{
@@ -232,7 +246,6 @@ public class BoggleFrame extends JFrame
 					if (!(wordsDisplay.contains(currentWord)))
 					{
 						score += currentWord.length();
-						;
 						lblScore.setText("SCORE: " + score);
 					} else
 					{
@@ -269,19 +282,23 @@ public class BoggleFrame extends JFrame
 	private void buildGrid()
 	{
 
-		buttons = new JButton[4][4];
+		buttons = new BoggleButton[4][4];
+		
+		BoggleButton.init(buttons);
+		
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 4; j++)
 			{
-				buttons[i][j] = new JButton(new BoggleDice().rollCube().toUpperCase());
+				buttons[i][j] = new BoggleButton(i, j);
+				buttons[i][j].setText(new BoggleDice().rollCube().toUpperCase());
 				buttons[i][j].setBorder(unclickborder);
 				buttons[i][j].setFont(new Font("American Typewriter",
 						Font.BOLD, 30));
 				final int buttonRow = i;
 				final int buttonColumn = j;
-				ActionListener listener = new BoggleEventHandler(buttons);
-				buttons[i][j].addActionListener(listener);
+				//ActionListener listener = new BoggleEventHandler(buttons);
+				//buttons[i][j].addActionListener(listener);
 				buttons[i][j].addActionListener(new ActionListener()
 				{
 					@Override
@@ -310,7 +327,7 @@ public class BoggleFrame extends JFrame
 
 		public void run()
 		{
-			for (int i = 100; i >= 0; i--)
+			for (int i = 10; i >= 0; i--)
 			{
 				final int progress = i;
 				final int counter = i;
@@ -353,11 +370,17 @@ public class BoggleFrame extends JFrame
 
 	private void gameOver()
 	{
-		 	JOptionPane.showMessageDialog(null, "GameOver.\n You scored: " + score+" ");
+		 	//JOptionPane.showMessageDialog(null, "GameOver.\n You scored: " + score+" ");
+			scoretrack= new ArrayList<Score>(Arrays.asList(new Score(theNames, score)));
+			theNames  = JOptionPane.showInputDialog(null, "GameOver.\n You scored: " + score+ "\n Please Enter your name: ");
+			
+			scoretrack.add(new Score(theNames, score));
 			startScreenPanel.setVisible(true);
 			gamePanel.setVisible(false);
 			wordsDisplay.clear();
 			currentWord=""; 
+			txtrHighScore.setText(getScoreName());
+				
 			textField.setText(currentWord);
 		for (int i = 0 ; i <4; i++)
 		{
@@ -370,5 +393,12 @@ public class BoggleFrame extends JFrame
 		}
 	}
 	
-	
+	private String getScoreName()
+	{
+		String temp = ""; 
+		for(Score el : scoretrack)
+			temp += el.toString() + "\n";
+		
+		return temp+=temp; 
+	}
 }
