@@ -82,24 +82,24 @@ public class HighScore
         }
 	}	
 	
-	public String getHighscoreString() {
-        String highscoreString = "";
-        int max = 10;
+// 	public String getHighscoreString() {
+//         String highscoreString = "";
+//         int max = 10;
 
-        ArrayList<Score> scores;
-        scores = getScores();
+//         ArrayList<Score> scores;
+//         scores = getScores();
 
-        int i = 0;
-        int x = scores.size();
-        if (x > max) {
-            x = max;
-        }
-        while (i < x) {
-            highscoreString += (i + 1) + ".\t" + scores.get(i).getTheNames() + "\t\t" + scores.get(i).getScore() + "\n";
-            i++;
-        }
-        return highscoreString;
-}
+//         int i = 0;
+//         int x = scores.size();
+//         if (x > max) {
+//             x = max;
+//         }
+//         while (i < x) {
+//             highscoreString += (i + 1) + ".\t" + scores.get(i).getTheNames() + "\t\t" + scores.get(i).getScore() + "\n";
+//             i++;
+//         }
+//         return highscoreString;
+// }
 	
 
 }
