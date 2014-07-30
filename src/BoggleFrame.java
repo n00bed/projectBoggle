@@ -371,10 +371,15 @@ public class BoggleFrame extends JFrame
 	private void gameOver()
 	{
 		 	//JOptionPane.showMessageDialog(null, "GameOver.\n You scored: " + score+" ");
-			scoretrack= new ArrayList<Score>(Arrays.asList(new Score(theNames, score)));
+			
 			theNames  = JOptionPane.showInputDialog(null, "GameOver.\n You scored: " + score+ "\n Please Enter your name: ");
 			
-			scoretrack.add(new Score(theNames, score));
+			scoretrack= new ArrayList<Score>(Arrays.asList(new Score(theNames, score)));
+			
+			//Read in HighScores and add new scores.
+			
+			//scoretrack.add(new Score(theNames, score));
+			// ^ ^ Score is being added twice.
 			startScreenPanel.setVisible(true);
 			gamePanel.setVisible(false);
 			wordsDisplay.clear();
