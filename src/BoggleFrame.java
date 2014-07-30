@@ -377,6 +377,8 @@ public class BoggleFrame extends JFrame
 			scoretrack= new ArrayList<Score>(Arrays.asList(new Score(theNames, score)));
 			
 			//Read in HighScores and add new scores.
+			//loadScore();
+			//updateScore();
 			
 			//scoretrack.add(new Score(theNames, score));
 			// ^ ^ Score is being added twice.
