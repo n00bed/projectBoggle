@@ -1,14 +1,25 @@
+package boggleGame;
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Formatter;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
@@ -33,6 +44,9 @@ import javax.swing.border.TitledBorder;
 public class BoggleFrame extends JFrame
 {
 
+	ScoreManager myScoresMan = new ScoreManager();
+	ArrayList<Score> arrayOfScores;
+	
 	private JPanel gamePanel;
 	private JPanel wordListArea;
 	private JPanel progressBar;
@@ -67,13 +81,13 @@ public class BoggleFrame extends JFrame
 	
 	private Set<String> words = new HashSet<String>();
 	private Set<String> wordsDisplay = new HashSet<String>();
-	private ArrayList<Score > scoretrack; 
+	 
 	private JLabel lblHighScores;
- 
-	
 
 	public BoggleFrame()
 	{
+		arrayOfScores = myScoresMan.getAllScores();
+		
 		// Card Layout to hold both main screen and game screen and set the size of the screen
 		getContentPane().setLayout(new CardLayout(0, 0));
 		this.setSize(600, 500);
@@ -108,6 +122,7 @@ public class BoggleFrame extends JFrame
 
 		});
 
+		
 		btnStartGame.setFont(new Font("American Typewriter", Font.BOLD, 30));
 		btnStartGame.setBounds(14, 204, 357, 221);
 		startScreenPanel.add(btnStartGame);
@@ -126,6 +141,8 @@ public class BoggleFrame extends JFrame
 		startScreenPanel.add(gameNameLabel);
 
 		// Text area to display HighScore
+		//scoresListArray = myScoresMan.getAllScores();
+		//ReadFile scoresDisplayed = new ReadFile();
 		txtrHighScore = new JTextArea();
 		txtrHighScore.setBorder(new EtchedBorder(EtchedBorder.RAISED, null,
 				null));
@@ -133,6 +150,15 @@ public class BoggleFrame extends JFrame
 		txtrHighScore.setEditable(false);
 		txtrHighScore.setFont(new Font("American Typewriter", Font.BOLD, 20));
 		txtrHighScore.setBounds(383, 73, 184, 352);
+		
+		//txtrHighScore.append(scoresListArray());
+		
+		arrayOfScores = myScoresMan.getAllScores();
+		
+		for (Score userScores : arrayOfScores){
+			txtrHighScore.append(userScores.getTheNames());
+		}
+		
 		startScreenPanel.add(txtrHighScore);
 		
 		//label that holds high score
@@ -355,7 +381,6 @@ public class BoggleFrame extends JFrame
 		}
 	}
 
-	// Returns word from set wordsDisplay
 	private String getwordsDisplay()
 	{
 		String return_value = "";
@@ -366,26 +391,19 @@ public class BoggleFrame extends JFrame
 
 		return return_value;
 	}
-	
 
 	private void gameOver()
 	{
-		 	//JOptionPane.showMessageDialog(null, "GameOver.\n You scored: " + score+" ");
 			
 			theNames  = JOptionPane.showInputDialog(null, "GameOver.\n You scored: " + score+ "\n Please Enter your name: ");
-			
-			scoretrack= new ArrayList<Score>(Arrays.asList(new Score(theNames, score)));
-			
-			//Read in HighScores and add new scores.
-			//loadScore();
-			//updateScore();
-			
-			//scoretrack.add(new Score(theNames, score));
+
+			arrayOfScores.add(new Score(theNames, score));
 			// ^ ^ Score is being added twice.
 			startScreenPanel.setVisible(true);
 			gamePanel.setVisible(false);
 			wordsDisplay.clear();
 			currentWord=""; 
+			
 			txtrHighScore.setText(getScoreName());
 				
 			textField.setText(currentWord);
@@ -399,13 +417,13 @@ public class BoggleFrame extends JFrame
 			}
 		}
 	}
-	
+
 	private String getScoreName()
-	{
+	{		
 		String temp = ""; 
-		for(Score el : scoretrack)
-			temp += el.toString() + "\n";
+		for(Score userScores : arrayOfScores)
+			temp += userScores.toString() + "\n";
 		
-		return temp+=temp; 
+		return temp; 
 	}
 }
