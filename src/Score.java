@@ -1,15 +1,12 @@
-
-
-import java.io.Serializable;
+package boggleGame;
 
 public class Score 
-implements Serializable, Comparable<Score>
+implements Comparable<Score>
 {
 	/**
 	 * @author Matt & Anil
 	 * 
 	 */
-	private static final long serialVersionUID = 1808539052969306357L;
 	private int score;
 	private String theNames;
 	
