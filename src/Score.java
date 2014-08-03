@@ -40,6 +40,6 @@ implements Comparable<Score>
 	@Override
 	public String toString()
 	{
-		return theNames+"\t "+score; 
+		return theNames+"\t  "+score; 
 	}
 }

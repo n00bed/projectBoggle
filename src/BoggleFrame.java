@@ -122,29 +122,26 @@ public class BoggleFrame extends JFrame
 		startScreenPanel.add(gameNameLabel);
 
 		// Text area to display HighScore
-		txtrHighScore = new JTextArea();
+		txtrHighScore = new JTextArea(getScoreName());
 		txtrHighScore.setBorder(new EtchedBorder(EtchedBorder.RAISED, null,
 				null));
 		txtrHighScore.setLineWrap(true);
 		txtrHighScore.setEditable(false);
 		txtrHighScore.setFont(new Font("American Typewriter", Font.BOLD, 20));
-		txtrHighScore.setBounds(383, 68, 200, 360);
-
-		// txtrHighScore.append(scoresListArray());
-		arrayOfScores = myScoresMan.getAllScores();
-
-		for (Score userScores : arrayOfScores)
-		{
-			txtrHighScore.append(userScores.getTheNames());
-		}
+		txtrHighScore.setBounds(383, 47, 200, 425);
 		startScreenPanel.add(txtrHighScore);
 
 		// label that holds high score
 		lblHighScores = new JLabel("PLAYER SCORES");
 		lblHighScores.setFont(new Font("American Typewriter", Font.BOLD, 20));
 		lblHighScores.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHighScores.setBounds(383, 41, 184, 16);
+		lblHighScores.setBounds(383, 27, 184, 16);
 		startScreenPanel.add(lblHighScores);
+		
+		JLabel lblAuthor = new JLabel("MATT HUMPHREY & ANIL DHUNGEL 2014 \u00A9");
+		lblAuthor.setFont(new Font("American Typewriter", Font.BOLD, 10));
+		lblAuthor.setBounds(14, 456, 346, 16);
+		startScreenPanel.add(lblAuthor);
 
 		// Actual game screen
 		gamePanel = new JPanel();
@@ -327,14 +324,16 @@ public class BoggleFrame extends JFrame
 		{
 		}
 
+		@Override
 		public void run()
 		{
-			for (int i = 20; i >= 0; i--)
+			for (int i = 10; i >= 0; i--)
 			{
 				final int progress = i;
 				final int counter = i;
 				SwingUtilities.invokeLater(new Runnable()
 				{
+					@Override
 					public void run()
 					{
 
@@ -371,7 +370,7 @@ public class BoggleFrame extends JFrame
 	private void gameOver()
 	{
 
-		theNames = JOptionPane.showInputDialog(null, "GameOver.\n You scored: "
+		theNames = JOptionPane.showInputDialog(null," GameOver.\n You scored: "
 				+ score + "\n Please Enter your name: ");
 
 		arrayOfScores.add(new Score(theNames, score));
@@ -382,6 +381,9 @@ public class BoggleFrame extends JFrame
 
 		//Sets the name and score on the screen 
 		txtrHighScore.setText(getScoreName());
+		
+		myScoresMan.writeFile(getScoreName());
+
 
 		textField.setText(currentWord);
 		for (int i = 0; i < 4; i++)
@@ -390,8 +392,7 @@ public class BoggleFrame extends JFrame
 			{
 				buttons[i][j].setEnabled(true);
 				buttons[i][j].setBorder(unclickborder);
-				buttons[i][j]
-						.setText(new BoggleDice().rollCube().toUpperCase());
+				buttons[i][j].setText(new BoggleDice().rollCube().toUpperCase());
 			}
 		}
 	}
