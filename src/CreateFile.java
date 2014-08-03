@@ -1,6 +1,12 @@
-package boggleGame;
+/*
+ * Author: Anil Dhungel & Matt Humphrey
+ * CSIS 1410
+ * ASSIGNMENT 09 - TEAM PROJECT - BOGGLE 
+ */
+/*
+ * This class creates and new file scoring.txt.
+ */
 
-import java.io.*;
 import java.util.*;
 
 public class CreateFile {
@@ -18,11 +24,6 @@ public class CreateFile {
 			}
 		}
 		
-//		public void addRecords()
-//		{
-		
-//			x.format("%s,%s",getTheNames,getScores);
-//		}
 		
 		public void closeFile()
 		{

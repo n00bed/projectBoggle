@@ -1,3 +1,13 @@
+/*
+ * Author: Anil Dhungel & Matt Humphrey
+ * CSIS 1410
+ * ASSIGNMENT 09 - TEAM PROJECT - BOGGLE 
+ */
+
+/*
+ * This class generates reads the word from lexicon file.
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashSet;

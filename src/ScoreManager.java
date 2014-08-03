@@ -1,11 +1,15 @@
+/*
+ * Author: Anil Dhungel & Matt Humphrey
+ * CSIS 1410
+ * ASSIGNMENT 09 - TEAM PROJECT - BOGGLE 
+ */
 
-package boggleGame;
+/*
+ * This class reads from the file scoring.txt.
+ */
 
 import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
-//import java.util.Formatter;
-import java.util.List;
 import java.util.Scanner;
 
 public class ScoreManager 

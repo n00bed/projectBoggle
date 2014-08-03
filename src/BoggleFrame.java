@@ -1,27 +1,23 @@
-package boggleGame;
+/*
+ * Author: Anil Dhungel & Matt Humphrey
+ * CSIS 1410
+ * ASSIGNMENT 09 - TEAM PROJECT - BOGGLE 
+ */
 
+/*
+ * This class generates the games, screen game over method, writing score to files etc.
+ */
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Formatter;
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -39,14 +35,9 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-
 @SuppressWarnings("serial")
 public class BoggleFrame extends JFrame
 {
-
-	ScoreManager myScoresMan = new ScoreManager();
-	ArrayList<Score> arrayOfScores;
-	
 	private JPanel gamePanel;
 	private JPanel wordListArea;
 	private JPanel progressBar;
@@ -54,41 +45,33 @@ public class BoggleFrame extends JFrame
 	private JPanel wordInputArea;
 	private JPanel wordListPanel;
 	private JPanel startScreenPanel;
-
 	private JLabel lblScore;
 	private JLabel lblEnterWord;
-
+	private JLabel lblHighScores;
 	private JTextArea wordListTextArea;
 	private JTextArea txtrHighScore;
-
 	private JTextField textField;
 	private JButton btnStartGame;
-
+	private JButton btnSubmit;
 	private BoggleButton buttons[][];
-
+	private String theNames;
+	private String currentWord = "";
 	private JScrollPane scroll;
 	private JProgressBar progressStatusBar;
-
-	private String currentWord = "";
 	private int score;
-	
-	private final Border clickBorder= new LineBorder(Color.RED, 5);
-	private final Border unclickborder= new LineBorder(Color.BLACK, 5);
-	
-	private JButton btnSubmit; 
-	private String theNames; 
-	
-	
+	private final Border clickBorder = new LineBorder(Color.RED, 5);
+	private final Border unclickborder = new LineBorder(Color.BLACK, 5);
 	private Set<String> words = new HashSet<String>();
 	private Set<String> wordsDisplay = new HashSet<String>();
-	 
-	private JLabel lblHighScores;
+	private ScoreManager myScoresMan = new ScoreManager();
+	private ArrayList<Score> arrayOfScores;
 
 	public BoggleFrame()
 	{
 		arrayOfScores = myScoresMan.getAllScores();
-		
-		// Card Layout to hold both main screen and game screen and set the size of the screen
+
+		// Card Layout to hold both main screen and game screen and set the size
+		// of the screen
 		getContentPane().setLayout(new CardLayout(0, 0));
 		this.setSize(600, 500);
 		this.setResizable(false);
@@ -98,7 +81,7 @@ public class BoggleFrame extends JFrame
 		// game
 		startScreenPanel = new JPanel();
 		startScreenPanel.setForeground(Color.BLACK);
-		startScreenPanel.setBackground(new Color(100,150,200));
+		startScreenPanel.setBackground(new Color(100, 150, 200));
 		getContentPane().add(startScreenPanel, "name_1406241583084739000");
 		startScreenPanel.setLayout(null);
 
@@ -117,16 +100,14 @@ public class BoggleFrame extends JFrame
 				wordListTextArea.setText("");
 				Task task = new Task();
 				task.start();
-				
+
 			}
 
 		});
 
-		
 		btnStartGame.setFont(new Font("American Typewriter", Font.BOLD, 30));
 		btnStartGame.setBounds(14, 204, 357, 221);
 		startScreenPanel.add(btnStartGame);
-
 
 		// Text area that displays the games name "THE ULTIMATE BOGGLE"
 		JTextArea gameNameLabel = new JTextArea();
@@ -141,8 +122,6 @@ public class BoggleFrame extends JFrame
 		startScreenPanel.add(gameNameLabel);
 
 		// Text area to display HighScore
-		//scoresListArray = myScoresMan.getAllScores();
-		//ReadFile scoresDisplayed = new ReadFile();
 		txtrHighScore = new JTextArea();
 		txtrHighScore.setBorder(new EtchedBorder(EtchedBorder.RAISED, null,
 				null));
@@ -150,25 +129,22 @@ public class BoggleFrame extends JFrame
 		txtrHighScore.setEditable(false);
 		txtrHighScore.setFont(new Font("American Typewriter", Font.BOLD, 20));
 		txtrHighScore.setBounds(383, 73, 184, 352);
-		
-		//txtrHighScore.append(scoresListArray());
-		
+
+		// txtrHighScore.append(scoresListArray());
 		arrayOfScores = myScoresMan.getAllScores();
-		
-		for (Score userScores : arrayOfScores){
+
+		for (Score userScores : arrayOfScores)
+		{
 			txtrHighScore.append(userScores.getTheNames());
 		}
-		
 		startScreenPanel.add(txtrHighScore);
-		
-		//label that holds high score
-		lblHighScores = new JLabel("HIGH SCORES");
+
+		// label that holds high score
+		lblHighScores = new JLabel("PLAYER SCORES");
 		lblHighScores.setFont(new Font("American Typewriter", Font.BOLD, 20));
 		lblHighScores.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHighScores.setBounds(383, 41, 184, 16);
 		startScreenPanel.add(lblHighScores);
-		
-	
 
 		// Actual game screen
 		gamePanel = new JPanel();
@@ -288,8 +264,8 @@ public class BoggleFrame extends JFrame
 				currentWord = "";
 				wordListTextArea.setText(getwordsDisplay() + "\n");
 
-				// Enables all the buttons that were disable when user input the
-				// last words
+//				 Enables all the buttons that were disable when user input the
+//				 last words
 				for (int i = 0; i < buttons.length; i++)
 				{
 					for (int j = 0; j < buttons.length; j++)
@@ -304,27 +280,26 @@ public class BoggleFrame extends JFrame
 		wordInputArea.add(btnSubmit);
 	}
 
-	//Creating 16 boards
+	// Creating 16 boards
 	private void buildGrid()
 	{
 
 		buttons = new BoggleButton[4][4];
-		
+
 		BoggleButton.init(buttons);
-		
+
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 4; j++)
 			{
 				buttons[i][j] = new BoggleButton(i, j);
-				buttons[i][j].setText(new BoggleDice().rollCube().toUpperCase());
+				buttons[i][j]
+						.setText(new BoggleDice().rollCube().toUpperCase());
 				buttons[i][j].setBorder(unclickborder);
 				buttons[i][j].setFont(new Font("American Typewriter",
 						Font.BOLD, 30));
 				final int buttonRow = i;
 				final int buttonColumn = j;
-				//ActionListener listener = new BoggleEventHandler(buttons);
-				//buttons[i][j].addActionListener(listener);
 				buttons[i][j].addActionListener(new ActionListener()
 				{
 					@Override
@@ -365,8 +340,8 @@ public class BoggleFrame extends JFrame
 						progressStatusBar.setString("" + progress + " seconds");
 						progressStatusBar.setValue(progress);
 						if (counter <= 0)
-						{	
-							gameOver(); 														
+						{
+							gameOver();
 						}
 
 					}
@@ -394,36 +369,38 @@ public class BoggleFrame extends JFrame
 
 	private void gameOver()
 	{
-			
-			theNames  = JOptionPane.showInputDialog(null, "GameOver.\n You scored: " + score+ "\n Please Enter your name: ");
 
-			arrayOfScores.add(new Score(theNames, score));
-			// ^ ^ Score is being added twice.
-			startScreenPanel.setVisible(true);
-			gamePanel.setVisible(false);
-			wordsDisplay.clear();
-			currentWord=""; 
-			
-			txtrHighScore.setText(getScoreName());
-				
-			textField.setText(currentWord);
-		for (int i = 0 ; i <4; i++)
+		theNames = JOptionPane.showInputDialog(null, "GameOver.\n You scored: "
+				+ score + "\n Please Enter your name: ");
+
+		arrayOfScores.add(new Score(theNames, score));
+		startScreenPanel.setVisible(true);
+		gamePanel.setVisible(false);
+		wordsDisplay.clear();
+		currentWord = "";
+
+		//Sets the name and score on the screen 
+		txtrHighScore.setText(getScoreName());
+
+		textField.setText(currentWord);
+		for (int i = 0; i < 4; i++)
 		{
-			for (int j = 0; j<4; j++)
+			for (int j = 0; j < 4; j++)
 			{
-			buttons[i][j].setEnabled(true);
-			buttons[i][j].setBorder(unclickborder);	
-			buttons[i][j].setText(new BoggleDice().rollCube().toUpperCase());
+				buttons[i][j].setEnabled(true);
+				buttons[i][j].setBorder(unclickborder);
+				buttons[i][j]
+						.setText(new BoggleDice().rollCube().toUpperCase());
 			}
 		}
 	}
-
+	//gets name and score from arrayOfScores
 	private String getScoreName()
-	{		
-		String temp = ""; 
-		for(Score userScores : arrayOfScores)
+	{
+		String temp = "";
+		for (Score userScores : arrayOfScores)
 			temp += userScores.toString() + "\n";
-		
-		return temp; 
+
+		return temp;
 	}
 }

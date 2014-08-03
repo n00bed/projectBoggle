@@ -1,3 +1,14 @@
+/*
+ * Author: Anil Dhungel & Matt Humphrey
+ * CSIS 1410
+ * ASSIGNMENT 09 - TEAM PROJECT - BOGGLE 
+ */
+
+/*
+ * This class generates a randome letter from 16 boggle cubes 
+ * and sets it to the button grid. 
+ */
+
 public class BoggleDice
 {
 	private static String[] bigBoggleCubes =
@@ -16,8 +27,7 @@ public class BoggleDice
 		numCubesCreated++;
 	}
 
-	
-	//'Roll' the cube, which will generate a random letter for itself.
+	// 'Roll' the cube, which will generate a random letter for itself.
 	public String rollCube()
 	{
 		int index = (int) (Math.random() * bigBoggleCubes[cubeID].length());

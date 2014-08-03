@@ -1,12 +1,17 @@
-package boggleGame;
+/*
+ * Author: Anil Dhungel & Matt Humphrey
+ * CSIS 1410
+ * ASSIGNMENT 09 - TEAM PROJECT - BOGGLE 
+ */
+
+/*
+ * This class has getter method for name and score that can be written screen 
+ */
 
 public class Score 
 implements Comparable<Score>
 {
-	/**
-	 * @author Matt & Anil
-	 * 
-	 */
+
 	private int score;
 	private String theNames;
 	
