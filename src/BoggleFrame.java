@@ -128,7 +128,7 @@ public class BoggleFrame extends JFrame
 		txtrHighScore.setLineWrap(true);
 		txtrHighScore.setEditable(false);
 		txtrHighScore.setFont(new Font("American Typewriter", Font.BOLD, 20));
-		txtrHighScore.setBounds(383, 73, 184, 352);
+		txtrHighScore.setBounds(383, 68, 200, 360);
 
 		// txtrHighScore.append(scoresListArray());
 		arrayOfScores = myScoresMan.getAllScores();
@@ -251,7 +251,7 @@ public class BoggleFrame extends JFrame
 						lblScore.setText("SCORE: " + score);
 					} else
 					{
-						JOptionPane.showMessageDialog(null, "Already used");
+						JOptionPane.showMessageDialog(null, "Word already used");
 					}
 					wordsDisplay.add(currentWord);
 
@@ -262,6 +262,7 @@ public class BoggleFrame extends JFrame
 				}
 
 				currentWord = "";
+				textField.setText(currentWord);
 				wordListTextArea.setText(getwordsDisplay() + "\n");
 
 //				 Enables all the buttons that were disable when user input the
@@ -328,7 +329,7 @@ public class BoggleFrame extends JFrame
 
 		public void run()
 		{
-			for (int i = 10; i >= 0; i--)
+			for (int i = 20; i >= 0; i--)
 			{
 				final int progress = i;
 				final int counter = i;

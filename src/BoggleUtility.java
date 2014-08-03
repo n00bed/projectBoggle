@@ -8,8 +8,7 @@
  * This class generates reads the word from lexicon file.
  */
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -23,25 +22,17 @@ public class BoggleUtility
 
 		// read one word at a time
 
-		try
-		{
-			@SuppressWarnings("resource")
-			Scanner s = new Scanner(new File("src/Lexicon"));
+		InputStream is = BoggleUtility.class.getResourceAsStream("Lexicon.txt");
+		Scanner s = new Scanner(is);
 
-			while (s.hasNextLine())
-			{
-				words.add(s.nextLine().toUpperCase());
-			}
-		} catch (FileNotFoundException e)
+		while (s.hasNextLine())
 		{
-
-			e.printStackTrace();
+			// System.out.println(words);
+			words.add(s.nextLine().toUpperCase());
 		}
-		// add into words
-
+		s.close();
 		return words;
 
 	}
-
 
 }
