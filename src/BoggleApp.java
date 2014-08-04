@@ -21,5 +21,10 @@ public class BoggleApp
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
+		
+		CreateFile myCreateFile = new CreateFile();
+		//Creates an instance of the file/path and opens it
+		myCreateFile.openFile();
+		myCreateFile.closeFile(
 	}
 }
